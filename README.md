@@ -83,6 +83,35 @@ This should return a `python` that is local to the `env` directory, most likely 
 1. Explore the command line options
 1. Experiment with `howfairis` configuration file
 
+Thew tool that we will be using in this part is called `howfairis`. It is a command line program that you can install from the Python Package Index (PyPI). PyPI is the Python community's platform where people publish their packages. You can see the page for the `howfairis` package on PyPI here https://pypi.org/project/howfairis
+
+With the virtual environment active, download and install `howfairis` from PyPI using:
+
+```shell
+python3 -m pip install howfairis
+```
+
+You should now have access to the `howfairis` command line program. Verify that it worked by having `howfairis` print its version, like so:
+
+```shell
+howfairis --version
+```
+
+(mine says: `version: 0.14.2`).
+
+If you didn't get any error messages during the `pip install` step, but can't access the command line program, you may have to update your `PATH` environment variable, or use absolute paths to point to the command line program. Updating your `PATH` can be done as follows:
+
+```shell
+# prepend the $PATH with the absolute path to the env's bin directory
+PATH=$PWD/env/bin:$PATH
+```
+
+Using `howfairis` with absolute paths can be done like this:
+
+```shell
+./env/bin/howfairis --version
+```
+
 ## fair-software GitHub action
 
 **This section in brief**
@@ -102,6 +131,8 @@ This should return a `python` that is local to the `env` directory, most likely 
 
 Example of how to get repository list from an organization (any other way is also fine):
 
+(More information on GitHub API here: https://docs.github.com/en/rest/repos/repos#list-organization-repositories)
+
 ```shell
 YOUR_ORG=citation-file-format
 curl -s -H "Accept: application/vnd.github+json" \
@@ -113,6 +144,8 @@ For example, that could result in
 
 ```shell
 cat urls.txt
+```
+```shell
 https://github.com/citation-file-format/citation-file-format
 https://github.com/citation-file-format/cff-converter-python
 https://github.com/citation-file-format/cff-initializer-javascript
