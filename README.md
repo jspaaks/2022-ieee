@@ -80,15 +80,63 @@ This should return a `python` that is local to the `env` directory, most likely 
 
 1. Install `howfairis` from PyPI
 1. Run `howfairis` on a repository of your choice
+1. Explore the command line options
+1. Experiment with `howfairis` configuration file
 
 ## fair-software GitHub action
 
 **This section in brief**
 
-1. GitHub actions
+1. GitHub Actions
+1. GitHub Actions Marketplace
 1. Set up continuous monitoring of fair-software badge
 
 ## `fairtally`
+
+**This section in brief**
+
+1. Install `fairtally`
+1. Create a list of repositories
+1. Run `fairtally`
+1. Inspect `fairtally` results
+
+Example of how to get repository list from an organization (any other way is also fine):
+
+```shell
+YOUR_ORG=citation-file-format
+curl -s -H "Accept: application/vnd.github+json" \
+"https://api.github.com/orgs/${YOUR_ORG}/repos?per_page=100&page=0&sort=pushed" | \
+jq -r '.[] .html_url' > urls.txt
+```
+
+For example, that could result in
+
+```shell
+cat urls.txt
+https://github.com/citation-file-format/citation-file-format
+https://github.com/citation-file-format/cff-converter-python
+https://github.com/citation-file-format/cff-initializer-javascript
+https://github.com/citation-file-format/citation-file-format.github.io
+https://github.com/citation-file-format/cff-initializer-javascript-v1
+https://github.com/citation-file-format/ruby-cff
+https://github.com/citation-file-format/cffconvert-github-action
+https://github.com/citation-file-format/doi2cff
+https://github.com/citation-file-format/branding
+https://github.com/citation-file-format/get-spdx-licenses
+https://github.com/citation-file-format/pycff
+https://github.com/citation-file-format/schema
+https://github.com/citation-file-format/cff-reader-java
+https://github.com/citation-file-format/citeme
+https://github.com/citation-file-format/citemycode
+```
+
+Make sure you have your GitHub/GitLab API access tokens as environment variables in your terminal, then run `fairtally` with the URL list:
+
+```
+fairtally -i urls.txt
+```
+
+Once it finishes, open the generated `tally.html` file in your browser to inspect the results.
 
 ## Additional materials
 
