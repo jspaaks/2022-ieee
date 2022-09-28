@@ -83,7 +83,7 @@ This should return a `python` that is local to the `env` directory, most likely 
 1. Explore the command line options
 1. Experiment with `howfairis` configuration file
 
-Thew tool that we will be using in this part is called `howfairis`. It is a command line program that you can install from the Python Package Index (PyPI). PyPI is the Python community's platform where people publish their packages. You can see the page for the `howfairis` package on PyPI here https://pypi.org/project/howfairis
+The tool that we will be using in this part is called `howfairis`. It is a command line program that you can install from the Python Package Index (PyPI). PyPI is the Python community's platform where people publish their packages, so that others can use them. You can see the page for the `howfairis` package on PyPI here https://pypi.org/project/howfairis
 
 With the virtual environment active, download and install `howfairis` from PyPI using:
 
@@ -99,7 +99,9 @@ howfairis --version
 
 (mine says: `version: 0.14.2`).
 
-If you didn't get any error messages during the `pip install` step, but can't access the command line program, you may have to update your `PATH` environment variable, or use absolute paths to point to the command line program. Updating your `PATH` can be done as follows:
+If you didn't get any error messages during the `pip install` step, but can't access the command line program, you may have to update your `PATH` environment variable, or use absolute paths to point to the command line program.
+
+Updating your `PATH` can be done as follows:
 
 ```shell
 # prepend the $PATH with the absolute path to the env's bin directory
