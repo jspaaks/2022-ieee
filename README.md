@@ -13,19 +13,13 @@ This tutorial makes extensive use of the command line. If you're on Windows, we 
 
 ### Install Python, `pip`
 
-Before we begin, we have to make sure that we have the necessary tools installed. Depending on your specific system has been set up, run
+Before we begin, we have to make sure that we have the necessary tools installed. Depending on how your specific system has been set up, run
 
 ```shell
 python3 --version
 ```
 
-or
-
-```shell
-python --version
-```
-
-Either way, make sure that the version number is 3.7 or higher. If you don't have Python yet, install from your operating system's repositories or download and install Python from https://www.python.org/downloads/.
+Make sure that the version number you're getting is 3.7 or higher. If you don't have Python yet, install from your operating system's repositories, or download and install Python from https://www.python.org/downloads/.
 
 Next, we need `pip` as well. Check if you have `pip` by:
 
@@ -33,7 +27,7 @@ Next, we need `pip` as well. Check if you have `pip` by:
 python3 -m pip --version
 ```
 
-For Windows and Mac (Homebrew), you should already have `pip` if you have Python. For Linux, you may need to install `pip` separately, e.g.:
+For Windows and Mac (via `homebrew`), you should already have `pip` if you have Python. For Linux, you may need to install `pip` separately, e.g.:
 
 ```shell
 # Ubuntu-like systems
@@ -52,8 +46,8 @@ python3 -m ensurepip --default-pip
 
 For more information on installing Python and `pip`, visit
 
-- https://packaging.python.org/en/latest/tutorials/installing-packages/ and
-- https://packaging.python.org/en/latest/guides/installing-using-linux-tools/
+1. https://packaging.python.org/en/latest/tutorials/installing-packages/
+1. https://packaging.python.org/en/latest/guides/installing-using-linux-tools/
 
 ### Make virtual environment
 
@@ -86,7 +80,6 @@ This should return a `python` that is local to the `env` directory, most likely 
 
 1. Install `howfairis` from PyPI
 1. Run `howfairis` on a repository of your choice
-
 
 ## fair-software GitHub action
 
