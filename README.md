@@ -133,8 +133,6 @@ Using `howfairis` with absolute paths can be done like this:
 
 Example of how to get repository list from an organization (any other way is also fine):
 
-(More information on GitHub API here: https://docs.github.com/en/rest/repos/repos#list-organization-repositories)
-
 ```shell
 YOUR_ORG=citation-file-format
 curl -s -H "Accept: application/vnd.github+json" \
@@ -142,7 +140,9 @@ curl -s -H "Accept: application/vnd.github+json" \
 jq -r '.[] .html_url' > urls.txt
 ```
 
-For example, that could result in
+(More information on GitHub API here: https://docs.github.com/en/rest/repos/repos#list-organization-repositories)
+
+For the `citation-file-format` organization, that results in
 
 ```shell
 cat urls.txt
@@ -163,6 +163,8 @@ https://github.com/citation-file-format/schema
 https://github.com/citation-file-format/cff-reader-java
 https://github.com/citation-file-format/citeme
 https://github.com/citation-file-format/citemycode
+https://github.com/citation-file-format/github2cff
+https://github.com/citation-file-format/soccs
 ```
 
 Make sure you have your GitHub/GitLab API access tokens as environment variables in your terminal, then run `fairtally` with the URL list:
@@ -171,7 +173,9 @@ Make sure you have your GitHub/GitLab API access tokens as environment variables
 fairtally -i urls.txt
 ```
 
-Once it finishes, open the generated `tally.html` file in your browser to inspect the results.
+Once it finishes, open the generated `tally.html` file in your browser to inspect the results. It should look more or less like this:
+
+![fairtally result](tally.html.png)
 
 ## Additional materials
 
