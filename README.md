@@ -1,6 +1,22 @@
 # How FAIR is your software? Introduction and Tutorial
 
-## Preparation
+## Tentative schedule
+
+| duration    | cumulative | description                  | session type |
+| ---         | ---        | ---                          | ---          |
+| 15m         | 15m        | fair-software.nl, FAIR       | presentation |
+| 10m         | 25m        | howfairis                    | demo         |
+| 20m         | 45m        | ~                            | hands on     |
+| 10m         | 55m        | howfairis config file        | demo         |
+| 10m         | 1h05m      | **break**                    | &nbsp;       |
+| 15m         | 1h20m      | fair-software GitHub Action  | demo         |
+| 20m         | 1h40m      | ~                            | hands on     |
+| 10m         | 1h50m      | fairtally                    | demo         |
+| 15m         | 2h05m      | ~                            | hands on     |
+| 10m         | 2h15m      | **break**                    | &nbsp;       |
+| 45m         | 3h         | extras                       | hands on     |
+
+## 1. Preparation
 
 **This section in brief**
 
@@ -74,7 +90,7 @@ which python3
 
 This should return a `python` that is local to the `env` directory, most likely `./env/bin/python`.
 
-## `howfairis`
+## 2. `howfairis`
 
 **This section in brief**
 
@@ -82,6 +98,7 @@ This should return a `python` that is local to the `env` directory, most likely 
 1. Run `howfairis` on a repository of your choice
 1. Explore the command line options
 1. Experiment with `howfairis` configuration file
+1. How to overrule a config file
 
 The tool that we will be using in this part is called `howfairis`. It is a command line program that you can install from the Python Package Index (PyPI). PyPI is the Python community's platform where people publish their packages, so that others can use them. You can see the page for the `howfairis` package on PyPI here https://pypi.org/project/howfairis
 
@@ -114,20 +131,21 @@ Using `howfairis` with absolute paths can be done like this:
 ./env/bin/howfairis --version
 ```
 
-## fair-software GitHub action
+## 3. fair-software GitHub action
 
 **This section in brief**
 
-1. GitHub Actions
+1. GitHub Actions: workflow files, triggers
 1. GitHub Actions Marketplace
 1. Set up continuous monitoring of fair-software badge
 
-## `fairtally`
+## 4. `fairtally`
 
 **This section in brief**
 
 1. Install `fairtally`
 1. Create a list of repositories
+1. Get access token for relevant platforms
 1. Run `fairtally`
 1. Inspect `fairtally` results
 
@@ -177,16 +195,16 @@ Once it finishes, open the generated `tally.html` file in your browser to inspec
 
 ![fairtally result](tally.html.png)
 
-## Additional materials
+TODO describe this is the end of base contents, but there are Extras below
 
-### Citation File Format and its tooling
+## 5. Extras: Citation File Format and its tooling
 
 Tools and format together with Stephan Druskat (DLR, UBerlin, SSI), Arfon Smith (GitHub), Rob Haines (UManchester), and contributors.
 
 - cffinit
 - cffconvert
 
-### Draft and publish depositions on Zenodo with `zenodraft` CLI
+## 6. Extras: Drafting and publishing depositions on Zenodo with `zenodraft` CLI
 
 **This section in brief**
 
@@ -253,7 +271,7 @@ OK, we're almost near the end of this section. We just need to use `zenodraft` t
 zenodraft deposition publish --sandbox $VERSION_ID
 ```
 
-### Recommended workflow to publish on Zenodo with maximum metadata
+## 7. Extras: Recommended workflow to publish on Zenodo with maximum metadata
 
 Prerequisites:
 
@@ -277,9 +295,9 @@ Problems with Zenodo-GitHub integration:
 
 In the current situation, one is forced to choose between good metadata rendering on GitHub citation widget, or good and extensive metadata on Zenodo. However, by combining `cffconvert`, `zenodraft`, GitHub actions, and `jq` (a command line JSON processor program), it's possible to have the best of both worlds. The rest of this section is dedicated to outlining the required workflow.
 
-### Checklist for FAIR research software
+## 8. Extras: Checklist for FAIR research software
 
-This checklist is a collaboration between Australian Research Data Council and Netherlands eScience Center. The questions in the checklist are based on discussions from the FAIR4RS initiative. Although the checklist is already in a usable state, be aware that it is still a work in progress. In particular, the checklist is hosted at GitHub pages at the moment. Because GitHub Pages URLs are a bit unwieldy, it's likely that the URL will change. Be aware that this may break hyperlinks, which may mean that you have to redo any previous self assessments (which isn't a lot of work if you have no more than a handful of projects, but still).
+The checklist we will use in this section is the result of a collaboration between Australian Research Data Council and Netherlands eScience Center. The questions in the checklist are based on discussions from the FAIR4RS initiative. Although the checklist is already in a usable state, be aware that it is still a work in progress. In particular, the checklist is hosted at GitHub pages at the moment. Because GitHub Pages URLs are a bit unwieldy, it's likely that the URL will change. Be aware that this may break hyperlinks, which may mean that you have to redo any previous self assessments (which isn't a lot of work if you have no more than a handful of projects, but still).
 
 The checklist is designed to be interactive, and yields a "FAIRness" badge that developers can put in their project's README file:
 
