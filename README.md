@@ -1,8 +1,99 @@
 # How FAIR is your software? Introduction and Tutorial
 
+## Preparation
+
+**This section in brief**
+
+1. Install Python, pip
+1. Make virtual environment
+
+**Note for Windows users only**
+
+This tutorial makes extensive use of the command line. If you're on Windows, we recommend you install "Git Bash" from the "Git for Windows" package. You can download it from here: https://gitforwindows.org/. Git Bash will allow you to run terminal emulator commands just like you would on Linux/Mac systems.
+
+### Install Python, `pip`
+
+Before we begin, we have to make sure that we have the necessary tools installed. Depending on your specific system has been set up, run
+
+```shell
+python3 --version
+```
+
+or
+
+```shell
+python --version
+```
+
+Either way, make sure that the version number is 3.7 or higher. If you don't have Python yet, install from your operating system's repositories or download and install Python from https://www.python.org/downloads/.
+
+Next, we need `pip` as well. Check if you have `pip` by:
+
+```shell
+python3 -m pip --version
+```
+
+For Windows and Mac (Homebrew), you should already have `pip` if you have Python. For Linux, you may need to install `pip` separately, e.g.:
+
+```shell
+# Ubuntu-like systems
+sudo apt update
+sudo apt install python3-venv python3-pip
+
+# Fedora
+sudo dnf install python3-pip python3-wheel
+```
+
+or
+
+```shell
+python3 -m ensurepip --default-pip
+```
+
+For more information on installing Python and `pip`, visit
+
+- https://packaging.python.org/en/latest/tutorials/installing-packages/ and
+- https://packaging.python.org/en/latest/guides/installing-using-linux-tools/
+
+### Make virtual environment
+
+For this tutorial, we will be installing `howfairis` and `fairtally` as well as their dependencies on to your system. To make sure we minimize interfering with your system, we'll be working in a so-called virtual environment. This way, we can avoid having to deal with (versions of) dependencies not playing nice with whatever else is on your system already.
+
+Let's create a virtual environment using `venv`, the standard tool for doing just that:
+
+```shell
+cd <to where you want the files for this tutorial to be>
+python3 -m venv env
+```
+
+This should create a new directory by the name `env` (or whatever you entered as the argument to `venv`). We just have to activate it, as follows:
+
+```shell
+source ./env/bin/activate
+```
+
+Depending on your system setup, the command line prompt will reflect that we are now using the virtual environment. You can also tell by asking the system about the `python3` it knows about, like so:
+
+```shell
+which python3
+```
+
+This should return a `python` that is local to the `env` directory, most likely `./env/bin/python`.
+
 ## `howfairis`
 
+**This section in brief**
+
+1. Install `howfairis` from PyPI
+1. Run `howfairis` on a repository of your choice
+
+
 ## fair-software GitHub action
+
+**This section in brief**
+
+1. GitHub actions
+1. Set up continuous monitoring of fair-software badge
 
 ## `fairtally`
 
@@ -26,8 +117,6 @@ Tools and format together with Stephan Druskat (DLR, UBerlin, SSI), Arfon Smith 
 1. use `zenodraft` to attach metadata to the new deposition on Zenodo Sandbox
 
 Since we're only exploring at the moment, this tutorial uses the Zenodo Sandbox environment instead of regular Zenodo. The `zenodraft` commands work the same for either target platform, just make sure to leave out the `--sandbox` flag, and don't forget you need separate tokens for each platform.
-
-Also note that some of the commands used in this section, specifically how environment variables are handled, are for Linux or Mac terminal emulator programs. If you're on Windows, "Git Bash" from the "Git for Windows" package is probably your best bet. You can download it from here: https://gitforwindows.org/.
 
 Before we get started, make sure you have the required programs:
 
