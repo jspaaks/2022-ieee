@@ -312,3 +312,22 @@ The snippet above renders like this:
 The advantage of this approach is that when visitors come to the project's README, they can restore the FAIRness self assessment state by clicking on the badge. This helps both with transparency and with metrics collection, while nudging researchers toward FAIRer practices.
 
 Go to https://ardc-fair-checklist.github.io/ardc-fair-checklist and see for yourself!
+
+
+## 9. Extras: Research Software Registries
+
+https://bit.ly/awesome-registries
+
+
+## 10. Extras: GitHub-Zenodo integration
+
+Radovan Bast has written an excellent guide on CodeRefinery that will walk you through setting up the GitHub-Zenodo integration. You can find it here: https://coderefinery.github.io/github-without-command-line/doi/.
+
+If you're setting up the integration for a GitHub organization (as opposed to your own user account), you may need to use the GitHub settings page to enable the OAuth app that makes Zenodo and GitHub work together. There is a separate OAuth app for Zenodo Sandbox and for Zenodo. You can find direct links to each below:
+
+- Zenodo Sandbox: https://github.com/settings/connections/applications/64a3663a0ac1183598ce
+- Zenodo: https://github.com/settings/connections/applications/c04ff9cf27ed8474bc1c
+
+There, you will find a list of GitHub organizations that you're an Admin for. Next to each organization, there will be a "Grant" button (see picture below) to allow the OAuth app to communicate with Zenodo / Zenodo Sandbox or your behalf. For organizations where you don't have enough permissions, there will be a "Request" button, to notify the organization administrators.
+
+![zenodo sandbox granting access](zenodo-sandbox-oauth-granting-access.png)
