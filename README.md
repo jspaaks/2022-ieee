@@ -297,7 +297,7 @@ In the current situation, one is forced to choose between good metadata renderin
 
 ## 8. Extras: Checklist for FAIR research software
 
-The checklist we will use in this section is the result of a collaboration between Australian Research Data Council and Netherlands eScience Center. The questions in the checklist are based on discussions from the FAIR4RS initiative. Although the checklist is already in a usable state, be aware that it is still a work in progress. In particular, the checklist is hosted at GitHub pages at the moment. Because GitHub Pages URLs are a bit unwieldy, it's likely that the URL will change. Be aware that this may break hyperlinks, which may mean that you have to redo any previous self assessments (which isn't a lot of work if you have no more than a handful of projects, but still).
+The checklist we will use in this section is the result of a collaboration between Australian Research Data Council and Netherlands eScience Center. The questions in the checklist are based on discussions from the [FAIR4RS](https://www.rd-alliance.org/groups/fair-research-software-fair4rs-wg) initiative. Although the checklist is already in a usable state, be aware that it is still a work in progress. In particular, the checklist is hosted at GitHub pages at the moment. Because GitHub Pages URLs are a bit unwieldy, it's likely that the URL will change. Be aware that this may break hyperlinks, which may mean that you have to redo any previous self assessments (which isn't a lot of work if you have no more than a handful of projects, but still).
 
 The checklist is designed to be interactive, and yields a "FAIRness" badge that developers can put in their project's README file:
 
@@ -313,17 +313,21 @@ The advantage of this approach is that when visitors come to the project's READM
 
 Go to https://ardc-fair-checklist.github.io/ardc-fair-checklist and see for yourself!
 
-
 ## 9. Extras: Research Software Registries
 
-https://bit.ly/awesome-registries
+In order for software to be used by others, they need to be able to find it, and once found, visitors must be able to recognize that it will help them with whatever problem they are trying to solve. For this, it is really helpful if you publish your software in a software registry and provide a description and some metadata there. Such registries typically employ so-called Search Engine Optimization (SEO) techniques to tell search engines what each software package is about, so that they in turn can include the relevant links when people use their search portals.
 
+There are many different types of research software registries, for example, they can be organized by programming language, by research domain, by organization, or even by country. The AwesomeList at https://bit.ly/awesome-registries provides an overview of such registries. 
+
+Have a look at the overview and consider publishing some of your software in a relevant repository.
 
 ## 10. Extras: GitHub-Zenodo integration
 
-Radovan Bast has written an excellent guide on CodeRefinery that will walk you through setting up the GitHub-Zenodo integration. You can find it here: https://coderefinery.github.io/github-without-command-line/doi/.
+For long term accessibility of your software, it's useful to store snapshots of your releases to an archiving platform such as [Zenodo](https://zenodo.org). Zenodo will keep a copy of a particular snapshot, and mint a persistent identifier (more specifically, a DOI) for it as well. This is useful for you and others who want to reference the exact version of your software, for example when using it for a paper. While you can upload your software by hand every time you make a release, it's convenient and less error-prone to automate the process such that Zenodo will store a snapshot every time you publish a release on GitHub. One way to set this up is to use the GitHub-Zenodo integration.
 
-If you're setting up the integration for a GitHub organization (as opposed to your own user account), you may need to use the GitHub settings page to enable the OAuth app that makes Zenodo and GitHub work together. There is a separate OAuth app for Zenodo Sandbox and for Zenodo. You can find direct links to each below:
+CodeRefinery has an excellent guide that will walk you through the necesaary steps [1]. You can find it here: https://coderefinery.github.io/github-without-command-line/doi/.
+
+If you're setting up the integration for a GitHub organization (as opposed to your own user account), you may need to use the GitHub settings page to enable the OAuth app that makes Zenodo and GitHub work together. There are separate OAuth apps for Zenodo Sandbox and for Zenodo. You can find direct links to each below:
 
 - Zenodo Sandbox: https://github.com/settings/connections/applications/64a3663a0ac1183598ce
 - Zenodo: https://github.com/settings/connections/applications/c04ff9cf27ed8474bc1c
@@ -331,3 +335,7 @@ If you're setting up the integration for a GitHub organization (as opposed to yo
 There, you will find a list of GitHub organizations that you're an Admin for. Next to each organization, there will be a "Grant" button (see picture below) to allow the OAuth app to communicate with Zenodo / Zenodo Sandbox or your behalf. For organizations where you don't have enough permissions, there will be a "Request" button, to notify the organization administrators.
 
 ![zenodo sandbox granting access](zenodo-sandbox-oauth-granting-access.png)
+
+### References
+
+1. Bast, R., Darst, R., Lenk, K. (2022) _Collaborating and sharing using GitHub without command line_, GitHub, https://github.com/coderefinery/github-without-command-line/tree/3a067788f1054f4816bf30d552ff40af64b33c78
