@@ -210,11 +210,34 @@ fairtally -i urls.txt
 
 ![fairtally result](tally.html.png)
 
+## Where to go from here
+
 At this point in the tutorial, you know how to generate a `howfairis` report on your own repo, how to monitor the status automatically using the fair-software GitHub Action, and even how to make an overview of the compliance status given a list of repositories.
 
 However, you may have found that the compliance score for your repos could still be improved. That's why the next sections are dedicated to resources, tools and workflows that can help you work on some of those aspects. You can pick and choose whichever subject you think is most interesting to you. Note that some sections assume knowledge of other sections; when this is the case, this is indicated at the top of the section as "Prerequisites".
 
-## 5. Extras: Creating a CITATION.cff file
+## Extras: GitHub-Zenodo integration
+
+To ensure long-term accessibility of your software, it's useful to store snapshots of your releases to an archiving platform such as [Zenodo](https://zenodo.org). Zenodo will keep a copy of a particular snapshot, and mint a persistent identifier (more specifically, a DOI) for it as well. This is useful for you and others who want to reference the exact version of your software, for example when using it for a paper. While you can upload your software by hand every time you make a release, it's convenient and less error-prone to automate the process such that Zenodo will store a snapshot every time you publish a release on GitHub. One way to set this up is to use the GitHub-Zenodo integration.
+
+CodeRefinery has an excellent guide that will walk you through the necessary steps [1]. You can find it here: https://coderefinery.github.io/github-without-command-line/doi/.
+
+&#9733; Use the CodeRefinery tutorial to set up the GitHub-Zenodo integration for an example repository.
+
+If you're setting up the integration for a GitHub organization (as opposed to your own user account), you may need to use the GitHub settings page to enable the OAuth app that makes Zenodo and GitHub work together. There are separate OAuth apps for Zenodo Sandbox and for Zenodo. You can find direct links to each below:
+
+- Zenodo Sandbox: https://github.com/settings/connections/applications/64a3663a0ac1183598ce
+- Zenodo: https://github.com/settings/connections/applications/c04ff9cf27ed8474bc1c
+
+There, you will find a list of GitHub organizations that you're an Admin for. Next to each organization, there will be a "Grant" button (see picture below) to allow the OAuth app to communicate with Zenodo / Zenodo Sandbox or your behalf. For organizations where you don't have enough permissions, there will be a "Request" button, to notify the organization administrators.
+
+![zenodo sandbox granting access](zenodo-sandbox-oauth-granting-access.png)
+
+### References
+
+1. Bast, R., Darst, R., Lenk, K. (2022) _Collaborating and sharing using GitHub without command line_, GitHub, https://github.com/coderefinery/github-without-command-line/tree/3a067788f1054f4816bf30d552ff40af64b33c78
+
+## Extras: Creating a CITATION.cff file
 
 The Citation File Format [1] enables research software developers to include citation metadata with their software in a way that is readable by both humans and machines. The idea for the format was first proposed back in 2017 during [WSSSPE5.1](https://wssspe.researchcomputing.org.uk/wssspe5-1/) and since then has seen a quick uptake across various relevant players in the research software space. Notably, GitHub now supports the format and will render a "How to cite this repo" widget if your repository includes a `CITATION.cff` file:
 
@@ -226,12 +249,14 @@ While you can write a `CITATION.cff` file by hand with just a text editor and a 
 
 &#9733; Use the cffinit website to generate a `CITATION.cff` file for your software, then upload it to your repository on GitHub if you have one. If you did this for the repository where you have the fair-software GitHub Action enabled, the status of that action will likely have changed to an error. Refer to the fair-software action's log output to learn how to make the action green again.
 
+&#9733; If you have the GitHub-Zenodo integration enabled for this repository (see previous section), try making a release and see what metadata from `CITATION.cff` is used to enrich the corresponding record on Zenodo Sandbox.
+
 ### References
 
 1. Druskat, S., Spaaks, J.H., Chue Hong, N., Haines, R., Baker, J., Bliven, S., Willighagen, E., Pérez-Suárez, D. and Konovalov, A. (2021) _Citation File Format_, Zenodo, doi: 10.5281/zenodo.5171937
 1. Spaaks, J.H., Verhoeven, S., Diblen, F., Druskat, S., Soares Siqueira, A., Garcia Gonzalez, J. and Cushing, R. (2022)_cffinit_, Zenodo, doi: 10.5281/zenodo.7032322
 
-## 6. Extras: Drafting and publishing depositions on Zenodo with `zenodraft` CLI
+## Extras: Drafting and publishing depositions on Zenodo with `zenodraft` CLI
 
 **This section in brief**
 
@@ -291,16 +316,15 @@ Zenodo supports a lot of metadata, but its documentation is a bit sparse at the 
 
 &#9733; For a glimpse of what is possible, have a look at https://sandbox.zenodo.org/record/1049232, a dummy deposition where we tried to use all the supported properties.
 
-OK, we're almost near the end of this section. We just need to use `zenodraft` to finalize the deposition. Note that once you finalize a deposition, you can no longer update the files in the deposition themselves (but the metadata can still be updated afterwards). Also note that finalizing can also be done by navigating to the Zenodo Sandox interface and clicking the button there.
+OK, we're almost near the end of this section. We just need to use `zenodraft` to finalize the deposition. Note that once you finalize a deposition, you can no longer update the files in the deposition (but the metadata can still be updated afterwards). Alternatively, you can finalize a deposition by navigating to the Zenodo Sandox interface and clicking the button there. This latter way can be especially useful because it gives you the opportunity to inspect the deposition before publishing it.
 
-&#9733; Finalize the deposition with:
+&#9733; Finalize the deposition with the command below, or instead do the same thing but use the Zenodo interface:
 
 ```shell
-# Optionally finalize the deposition from this command line, or via Zenodo interface
 zenodraft deposition publish --sandbox $VERSION_ID
 ```
 
-## 7. Extras: Recommended workflow to publish on Zenodo with maximum metadata
+## Extras: Recommended workflow to publish on Zenodo with maximum metadata
 
 **Prerequisites**
 
@@ -324,7 +348,7 @@ Problems with Zenodo-GitHub integration:
 
 In the current situation, one is forced to choose between good metadata rendering on GitHub citation widget, or good and extensive metadata on Zenodo. However, by combining `cffconvert`, `zenodraft`, GitHub actions, and `jq` (a command line JSON processor program), it's possible to have the best of both worlds. The rest of this section is dedicated to outlining the required workflow.
 
-## 8. Extras: Checklist for FAIR research software
+## Extras: Checklist for FAIR research software
 
 The checklist we will use in this section is the result of a collaboration between Australian Research Data Council and Netherlands eScience Center. The questions in the checklist are based on discussions from the [FAIR4RS](https://www.rd-alliance.org/groups/fair-research-software-fair4rs-wg) initiative. Although the checklist is already in a usable state, be aware that it is still a work in progress. In particular, the checklist is hosted at GitHub pages at the moment. Because GitHub Pages URLs are a bit unwieldy, it's likely that the URL will change. Be aware that this may break hyperlinks, which may mean that you have to redo any previous self assessments (which isn't a lot of work if you have no more than a handful of projects, but still).
 
@@ -342,31 +366,10 @@ The advantage of this approach is that when visitors come to the project's READM
 
 &#9733; Go to https://ardc-fair-checklist.github.io/ardc-fair-checklist and see for yourself!
 
-## 9. Extras: Research Software Registries
+## Extras: Research Software Registries
 
 In order for software to be used by others, they need to be able to find it, and once found, visitors must be able to recognize that it will help them with whatever problem they are trying to solve. For this, it is really helpful if you publish your software in a software registry and provide a description and some metadata there. Such registries typically employ so-called Search Engine Optimization (SEO) techniques to tell search engines what each software package is about, so that they in turn can include the relevant links when people use their search portals.
 
 There are many different types of research software registries, for example, they can be organized by programming language, by research domain, by organization, or even by country. The AwesomeList at https://bit.ly/awesome-registries provides an overview of such registries. 
 
 &#9733; Have a look at the overview and consider publishing some of your software in a relevant repository.
-
-## 10. Extras: GitHub-Zenodo integration
-
-For long term accessibility of your software, it's useful to store snapshots of your releases to an archiving platform such as [Zenodo](https://zenodo.org). Zenodo will keep a copy of a particular snapshot, and mint a persistent identifier (more specifically, a DOI) for it as well. This is useful for you and others who want to reference the exact version of your software, for example when using it for a paper. While you can upload your software by hand every time you make a release, it's convenient and less error-prone to automate the process such that Zenodo will store a snapshot every time you publish a release on GitHub. One way to set this up is to use the GitHub-Zenodo integration.
-
-CodeRefinery has an excellent guide that will walk you through the necessary steps [1]. You can find it here: https://coderefinery.github.io/github-without-command-line/doi/.
-
-&#9733; Use the CodeRefinery tutorial to set up the GitHub-Zenodo integration for an example repository.
-
-If you're setting up the integration for a GitHub organization (as opposed to your own user account), you may need to use the GitHub settings page to enable the OAuth app that makes Zenodo and GitHub work together. There are separate OAuth apps for Zenodo Sandbox and for Zenodo. You can find direct links to each below:
-
-- Zenodo Sandbox: https://github.com/settings/connections/applications/64a3663a0ac1183598ce
-- Zenodo: https://github.com/settings/connections/applications/c04ff9cf27ed8474bc1c
-
-There, you will find a list of GitHub organizations that you're an Admin for. Next to each organization, there will be a "Grant" button (see picture below) to allow the OAuth app to communicate with Zenodo / Zenodo Sandbox or your behalf. For organizations where you don't have enough permissions, there will be a "Request" button, to notify the organization administrators.
-
-![zenodo sandbox granting access](zenodo-sandbox-oauth-granting-access.png)
-
-### References
-
-1. Bast, R., Darst, R., Lenk, K. (2022) _Collaborating and sharing using GitHub without command line_, GitHub, https://github.com/coderefinery/github-without-command-line/tree/3a067788f1054f4816bf30d552ff40af64b33c78
