@@ -65,7 +65,7 @@ For more information on installing Python and `pip`, visit
 1. https://packaging.python.org/en/latest/tutorials/installing-packages/
 1. https://packaging.python.org/en/latest/guides/installing-using-linux-tools/
 
-### Make virtual environment
+### Virtual environment
 
 For this tutorial, we will be installing `howfairis` and `fairtally` as well as their dependencies on to your system. To make sure we minimize interfering with your system, we'll be working in a so-called virtual environment. This way, we can avoid having to deal with (versions of) dependencies not playing nice with whatever else is on your system already.
 
@@ -90,7 +90,7 @@ which python3
 
 This should return a `python` that is local to the `env` directory, most likely `./env/bin/python`.
 
-## 2. `howfairis`
+## 2. howfairis
 
 **This section in brief**
 
@@ -139,7 +139,7 @@ Using `howfairis` with absolute paths can be done like this:
 1. GitHub Actions Marketplace
 1. Set up continuous monitoring of fair-software badge
 
-## 4. `fairtally`
+## 4. fairtally
 
 **This section in brief**
 
@@ -149,7 +149,7 @@ Using `howfairis` with absolute paths can be done like this:
 1. Run `fairtally`
 1. Inspect `fairtally` results
 
-Example of how to get repository list from an organization (any other way is also fine):
+Example of how to get a list of repositories from an organization (doing it any other way is also fine!):
 
 ```shell
 YOUR_ORG=citation-file-format
@@ -195,7 +195,9 @@ Once it finishes, open the generated `tally.html` file in your browser to inspec
 
 ![fairtally result](tally.html.png)
 
-TODO describe this is the end of base contents, but there are Extras below
+At this point in the tutorial, you know how to generate a `howfairis` report on your own repo, how to monitor the status automatically using the fair-software GitHub Action, and even how to make an overview of the compliance status given a list of repositories.
+
+However, you may have found that the compliance score for your repos could still be improved. That's why the next sections are dedicated to resources, tools and workflows that can help you work on some of those aspects. You can pick and choose whichever subject you think is most interesting to you. Note that some sections assume knowledge of other sections; when this is the case, this is indicated at the top of the section as "Prerequisites".
 
 ## 5. Extras: Citation File Format and its tooling
 
@@ -203,6 +205,7 @@ Tools and format together with Stephan Druskat (DLR, UBerlin, SSI), Arfon Smith 
 
 - cffinit
 - cffconvert
+- optional: cffconvert pre-commit hook
 
 ## 6. Extras: Drafting and publishing depositions on Zenodo with `zenodraft` CLI
 
@@ -273,11 +276,11 @@ zenodraft deposition publish --sandbox $VERSION_ID
 
 ## 7. Extras: Recommended workflow to publish on Zenodo with maximum metadata
 
-Prerequisites:
+**Prerequisites**
 
-- section above on Citation File Format
-- section above on `zenodraft`
-- GitHub Actions
+1. section above on Citation File Format
+1. section above on `zenodraft`
+1. basic knowledge of GitHub Actions
 
 **This section in brief**
 
