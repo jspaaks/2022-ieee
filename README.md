@@ -27,9 +27,13 @@
 
 This tutorial makes extensive use of the command line. If you're on Windows, we recommend you install "Git Bash" from the "Git for Windows" package. You can download it from here: https://gitforwindows.org/. Git Bash will allow you to run terminal emulator commands just like you would on Linux/Mac systems.
 
+**Action required (&#9733;)**
+
+Throughout this tutorial, you'll encounter the &#9733; symbol; this indicates that you have to take some kind of action which is described in the text immediately following the symbol. Of course, you are welcome to experiment with running additional commands as you work through these materials. Let yourself be guided by your curiosity!
+
 ### Install Python, `pip`
 
-Before we begin, we have to make sure that we have the necessary tools installed. Depending on how your specific system has been set up, run
+&#9733; Before we begin, we have to make sure that we have the necessary tools installed. Depending on how your specific system has been set up, run
 
 ```shell
 python3 --version
@@ -37,7 +41,7 @@ python3 --version
 
 Make sure that the version number you're getting is 3.7 or higher. If you don't have Python yet, install from your operating system's repositories, or download and install Python from https://www.python.org/downloads/.
 
-Next, we need `pip` as well. Check if you have `pip` by:
+&#9733; Next, we need `pip` as well. Check if you have `pip` by:
 
 ```shell
 python3 -m pip --version
@@ -69,14 +73,14 @@ For more information on installing Python and `pip`, visit
 
 For this tutorial, we will be installing `howfairis` and `fairtally` as well as their dependencies on to your system. To make sure we minimize interfering with your system, we'll be working in a so-called virtual environment. This way, we can avoid having to deal with (versions of) dependencies not playing nice with whatever else is on your system already.
 
-Let's create a virtual environment using `venv`, the standard tool for doing just that:
+&#9733; Create a virtual environment using `venv`, the standard tool for doing just that:
 
 ```shell
 cd <to where you want the files for this tutorial to be>
 python3 -m venv env
 ```
 
-This should create a new directory by the name `env` (or whatever you entered as the argument to `venv`). We just have to activate it, as follows:
+&#9733; The previous command should have created a new directory by the name `env` (or whatever you entered as the argument to `venv`). We just have to activate it, as follows:
 
 ```shell
 source ./env/bin/activate
@@ -102,13 +106,13 @@ This should return a `python` that is local to the `env` directory, most likely 
 
 The tool that we will be using in this part is called `howfairis`. It is a command line program that you can install from the Python Package Index (PyPI). PyPI is the Python community's platform where people publish their packages, so that others can use them. You can see the page for the `howfairis` package on PyPI here https://pypi.org/project/howfairis
 
-With the virtual environment active, download and install `howfairis` from PyPI using:
+&#9733; With the virtual environment active, download and install `howfairis` from PyPI using:
 
 ```shell
 python3 -m pip install howfairis
 ```
 
-You should now have access to the `howfairis` command line program. Verify that it worked by having `howfairis` print its version, like so:
+&#9733; You should now have access to the `howfairis` command line program. Verify that it worked by having `howfairis` print its version, like so:
 
 ```shell
 howfairis --version
@@ -130,6 +134,17 @@ Using `howfairis` with absolute paths can be done like this:
 ```shell
 ./env/bin/howfairis --version
 ```
+
+&#9733; Next, pick one of your repositories on GitHub for which you want to do the `howfairis` analysis, as follows:
+
+```shell
+# e.g. I created a dummy repository "ieee-test-repo" under my GitHub user account "jspaaks"
+howfairis https://github.com/jspaaks/ieee-test-repo
+```
+
+TODO look at results
+
+TODO mention GitLab aslo works, but more convenient to do GitHub for what comes after. Also some limitations on GitLab.
 
 ## 3. fair-software GitHub action
 
@@ -185,13 +200,13 @@ https://github.com/citation-file-format/github2cff
 https://github.com/citation-file-format/soccs
 ```
 
-Make sure you have your GitHub/GitLab API access tokens as environment variables in your terminal, then run `fairtally` with the URL list:
+&#9733; Make sure you have your GitHub/GitLab API access tokens as environment variables in your terminal, then run `fairtally` with the URL list:
 
 ```
 fairtally -i urls.txt
 ```
 
-Once it finishes, open the generated `tally.html` file in your browser to inspect the results. It should look more or less like this:
+&#9733; Once it finishes, open the generated `tally.html` file in your browser to inspect the results. It should look more or less like this:
 
 ![fairtally result](tally.html.png)
 
@@ -199,13 +214,22 @@ At this point in the tutorial, you know how to generate a `howfairis` report on 
 
 However, you may have found that the compliance score for your repos could still be improved. That's why the next sections are dedicated to resources, tools and workflows that can help you work on some of those aspects. You can pick and choose whichever subject you think is most interesting to you. Note that some sections assume knowledge of other sections; when this is the case, this is indicated at the top of the section as "Prerequisites".
 
-## 5. Extras: Citation File Format and its tooling
+## 5. Extras: Creating a CITATION.cff file
 
-Tools and format together with Stephan Druskat (DLR, UBerlin, SSI), Arfon Smith (GitHub), Rob Haines (UManchester), and contributors.
+The Citation File Format [1] enables research software developers to include citation metadata with their software in a way that is readable by both humans and machines. The idea for the format was first proposed back in 2017 during [WSSSPE5.1](https://wssspe.researchcomputing.org.uk/wssspe5-1/) and since then has seen a quick uptake across various relevant players in the research software space. Notably, GitHub now supports the format and will render a "How to cite this repo" widget if your repository includes a `CITATION.cff` file:
 
-- cffinit
-- cffconvert
-- optional: cffconvert pre-commit hook
+![github citation widget](github-citation-widget.png)
+
+Additionally, Zenodo will use metadata from a `CITATION.cff` file while ingesting a snapshot for archiving when used in combination with the GitHub-Zenodo integration.
+
+While you can write a `CITATION.cff` file by hand with just a text editor and a copy of the [_Guide to Citation File Format schema_](https://github.com/citation-file-format/citation-file-format/blob/1.2.0/schema-guide.md), it is recommended to use the cffinit website: https://bit.ly/cffinit [2]. The website will help you write a valid `CITATION.cff.`
+
+&#9733; Use the cffinit website to generate a `CITATION.cff` file for your software, then upload it to your repository on GitHub if you have one. If you did this for the repository where you have the fair-software GitHub Action enabled, the status of that action will likely have changed to an error. Refer to the fair-software action's log output to learn how to make the action green again.
+
+### References
+
+1. Druskat, S., Spaaks, J.H., Chue Hong, N., Haines, R., Baker, J., Bliven, S., Willighagen, E., Pérez-Suárez, D. and Konovalov, A. (2021) _Citation File Format_, Zenodo, doi: 10.5281/zenodo.5171937
+1. Spaaks, J.H., Verhoeven, S., Diblen, F., Druskat, S., Soares Siqueira, A., Garcia Gonzalez, J. and Cushing, R. (2022)_cffinit_, Zenodo, doi: 10.5281/zenodo.7032322
 
 ## 6. Extras: Drafting and publishing depositions on Zenodo with `zenodraft` CLI
 
@@ -219,7 +243,7 @@ Tools and format together with Stephan Druskat (DLR, UBerlin, SSI), Arfon Smith 
 
 Since we're only exploring at the moment, this tutorial uses the Zenodo Sandbox environment instead of regular Zenodo. The `zenodraft` commands work the same for either target platform, just make sure to leave out the `--sandbox` flag, and don't forget you need separate tokens for each platform.
 
-Before we get started, make sure you have the required programs:
+&#9733; Before we get started, make sure you have the required programs:
 
 ```shell
 # assert you have node and npm and zenodraft (after prerequisite sections)
@@ -228,46 +252,48 @@ npm --version        # I'm on 8.5.5
 zenodraft --version  # I'm on 0.12.0
 ```
 
-In order to use Zenodo Sandbox, you are required to identify yourself using a token. Get the token here https://sandbox.zenodo.org/account/settings/applications/. `zenodraft` will look for an environment variable by the name of `ZENODO_SANDBOX_ACCESS_TOKEN` whose value you should set to the value of your token.
+&#9733; In order to use Zenodo Sandbox, you are required to identify yourself using a token. Get the token here https://sandbox.zenodo.org/account/settings/applications/. `zenodraft` will look for an environment variable by the name of `ZENODO_SANDBOX_ACCESS_TOKEN` whose value you should set to the value of your token.
 
 ```shell
 # add tokens to terminal
 export ZENODO_SANDBOX_ACCESS_TOKEN=<your-zenodo-sandbox-token>
 ```
 
-Let's create an empty draft deposition in a new collection. If successful, it will return the identifier for the first version in the new collection, which is empty at the moment and still a draft / unpublished.
+&#9733; Create an empty draft deposition in a new collection. If successful, it will return the identifier for the first version in the new collection, which is empty at the moment and still a draft / unpublished.
 
 ```shell
 VERSION_ID=$(zenodraft deposition create concept --sandbox)
 ```
 
-Now point your browser to https://sandbox.zenodo.org and click "Upload" (button at the center top of the page; may ask you to provide credentials). After the jump, you should see a list of your depositions on Zenodo Sandbox. If everything worked, the top one is the one you just made. It should still be in unpublished/draft mode.
+&#9733; Now point your browser to https://sandbox.zenodo.org and click "Upload" (button at the center top of the page; may ask you to provide credentials). After the jump, you should see a list of your depositions on Zenodo Sandbox. If everything worked, the top one is the one you just made. It should still be in unpublished/draft mode.
 
-Let's add a file to the draft deposition. Just use some dummy file, but make sure it has some content otherwise Zenodo doesn't play nice.
+&#9733; Add a file to the draft deposition. Just use some dummy file, but make sure it has some content otherwise Zenodo doesn't play nice.
 
 ```shell
 # make some fake data
 echo 'some data' > thefile.txt
 ```
 
-Now upload the file to the newly created deposition
+&#9733; Now upload the file to the newly created deposition
 
 ```shell
 zenodraft file add --sandbox $VERSION_ID thefile.txt
 ```
 
-Next, let's add some metadata to the deposition. We can store this metadata in a local file, typically named `.zenodo.json`. 
+&#9733; Next, add some metadata to the deposition. We can store this metadata in a local file, typically named `.zenodo.json`. 
 
 ```shell
 # add the metadata using data from a metadata file
 zenodraft metadata update --sandbox $VERSION_ID .zenodo.json
 ```
 
-Zenodo supports a lot of metadata, but documentation is a bit sparse at the moment. The unofficial JSONschema for Zenodo depositions is available here: https://github.com/zenodraft/metadata-schema-zenodo. You can use tools such as JSONlint (https://jsonlint.com) to make sure the file you're writing is valid JSON, and tools like JSONSchemaValidator (https://www.jsonschemavalidator.net/) to make sure the JSON follows the layout that Zenodo expects.
+Zenodo supports a lot of metadata, but its documentation is a bit sparse at the moment. The unofficial JSONschema for Zenodo depositions is available here: https://github.com/zenodraft/metadata-schema-zenodo. You can use tools such as JSONlint (https://jsonlint.com) to make sure the file you're writing is valid JSON, and tools like JSONSchemaValidator (https://www.jsonschemavalidator.net/) to make sure the JSON follows the layout that Zenodo expects.
 
-For a glimpse of what is possible, have a look at https://sandbox.zenodo.org/record/1049232, a dummy deposition where we tried to use all the supported properties.
+&#9733; For a glimpse of what is possible, have a look at https://sandbox.zenodo.org/record/1049232, a dummy deposition where we tried to use all the supported properties.
 
 OK, we're almost near the end of this section. We just need to use `zenodraft` to finalize the deposition. Note that once you finalize a deposition, you can no longer update the files in the deposition themselves (but the metadata can still be updated afterwards). Also note that finalizing can also be done by navigating to the Zenodo Sandox interface and clicking the button there.
+
+&#9733; Finalize the deposition with:
 
 ```shell
 # Optionally finalize the deposition from this command line, or via Zenodo interface
@@ -314,7 +340,7 @@ The snippet above renders like this:
 
 The advantage of this approach is that when visitors come to the project's README, they can restore the FAIRness self assessment state by clicking on the badge. This helps both with transparency and with metrics collection, while nudging researchers toward FAIRer practices.
 
-Go to https://ardc-fair-checklist.github.io/ardc-fair-checklist and see for yourself!
+&#9733; Go to https://ardc-fair-checklist.github.io/ardc-fair-checklist and see for yourself!
 
 ## 9. Extras: Research Software Registries
 
@@ -322,13 +348,15 @@ In order for software to be used by others, they need to be able to find it, and
 
 There are many different types of research software registries, for example, they can be organized by programming language, by research domain, by organization, or even by country. The AwesomeList at https://bit.ly/awesome-registries provides an overview of such registries. 
 
-Have a look at the overview and consider publishing some of your software in a relevant repository.
+&#9733; Have a look at the overview and consider publishing some of your software in a relevant repository.
 
 ## 10. Extras: GitHub-Zenodo integration
 
 For long term accessibility of your software, it's useful to store snapshots of your releases to an archiving platform such as [Zenodo](https://zenodo.org). Zenodo will keep a copy of a particular snapshot, and mint a persistent identifier (more specifically, a DOI) for it as well. This is useful for you and others who want to reference the exact version of your software, for example when using it for a paper. While you can upload your software by hand every time you make a release, it's convenient and less error-prone to automate the process such that Zenodo will store a snapshot every time you publish a release on GitHub. One way to set this up is to use the GitHub-Zenodo integration.
 
-CodeRefinery has an excellent guide that will walk you through the necesaary steps [1]. You can find it here: https://coderefinery.github.io/github-without-command-line/doi/.
+CodeRefinery has an excellent guide that will walk you through the necessary steps [1]. You can find it here: https://coderefinery.github.io/github-without-command-line/doi/.
+
+&#9733; Use the CodeRefinery tutorial to set up the GitHub-Zenodo integration for an example repository.
 
 If you're setting up the integration for a GitHub organization (as opposed to your own user account), you may need to use the GitHub settings page to enable the OAuth app that makes Zenodo and GitHub work together. There are separate OAuth apps for Zenodo Sandbox and for Zenodo. You can find direct links to each below:
 
