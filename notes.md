@@ -1,9 +1,10 @@
 # IEEE
 
 - TODO check wifi situation at the conference
-- TODO make tutorial materials available online (GitHub repo)
+- Mention early on that it is recommended to have a GitHub account
+- ~~TODO make tutorial materials available online (GitHub repo)~~
 - TODO get colored sticky notes
-- where in the program will we gather list of repos for running fairtally
+- ~~where in the program will we gather list of repos for running fairtally~~
 - explain connection readme and howfairis score side by side
 
 ## interest poll
