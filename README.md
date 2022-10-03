@@ -47,7 +47,7 @@ Make sure that the version number you're getting is 3.7 or higher. If you don't 
 python3 -m pip --version
 ```
 
-For Windows and Mac (via `homebrew`), you should already have `pip` if you have Python. For Linux, you may need to install `pip` separately, e.g.:
+For Windows and Mac (via `homebrew`), you should already have `pip` if you have Python. For Linux, you may need to install `pip` separately. While you're at it, now is probably a good time to install some other dependencies as well:
 
 ```shell
 # Ubuntu-like systems
@@ -104,7 +104,7 @@ This should return a `python` that is local to the `env` directory, most likely 
 1. Experiment with `howfairis` configuration file
 1. How to overrule a config file
 
-The tool that we will be using in this part is called `howfairis`. It is a command line program that you can install from the Python Package Index (PyPI). PyPI is the Python community's platform where people publish their packages, so that others can use them. You can see the page for the `howfairis` package on PyPI here https://pypi.org/project/howfairis
+The tool that we will be using in this part is called `howfairis`. It is a command line program that you can install from the Python Package Index (PyPI). PyPI is the Python community's platform where people publish their packages, so that others can use them. You can see the page for the `howfairis` package on PyPI here https://pypi.org/project/howfairis.
 
 &#9733; With the virtual environment active, download and install `howfairis` from PyPI using:
 
@@ -135,16 +135,78 @@ Using `howfairis` with absolute paths can be done like this:
 ./env/bin/howfairis --version
 ```
 
-&#9733; Next, pick one of your repositories on GitHub for which you want to do the `howfairis` analysis, as follows:
+&#9733; Next, create a new repository on GitHub for the experiments we'll be doing in this tutorial. Make sure to check the "Add a README file" checkbox when asked, and verify that the repository visibility is set to "Public", otherwise the tooling won't be able to see you repository.
+
+&#9733; From you terminal, run `howfairis` on the newly created repository, as follows:
 
 ```shell
 # e.g. I created a dummy repository "ieee-test-repo" under my GitHub user account "jspaaks"
 howfairis https://github.com/jspaaks/ieee-test-repo
 ```
 
-TODO look at results
+This should print something along the lines of the following:
 
-TODO mention GitLab aslo works, but more convenient to do GitHub for what comes after. Also some limitations on GitLab.
+```text
+Checking compliance with fair-software.eu...
+url: https://github.com/jspaaks/ieee-test-repo
+(1/5) repository
+      ✓ has_open_repository
+(2/5) license
+      × has_license
+(3/5) registry
+      × has_ascl_badge
+      × has_bintray_badge
+      × has_conda_badge
+      × has_cran_badge
+      × has_crates_badge
+      × has_maven_badge
+      × has_npm_badge
+      × has_pypi_badge
+      × has_rsd_badge
+      × is_on_github_marketplace
+(4/5) citation
+      × has_citation_file
+      × has_citationcff_file
+      × has_codemeta_file
+      × has_zenodo_badge
+      × has_zenodo_metadata_file
+(5/5) checklist
+      × has_core_infrastructures_badge
+
+Calculated compliance: ● ○ ○ ○ ○
+
+It seems you have not yet added the fair-software.eu badge to
+your README.md. You can do so by pasting the following snippet:
+
+[![fair-software.eu](https://img.shields.io/badge/fair--softwa
+re.eu-%E2%97%8F%20%20%E2%97%8B%20%20%E2%97%8B%20%20%E2%97%8B%2
+0%20%E2%97%8B-red)](https://fair-software.eu)
+Warning: Your README.md was updated less than 5 minutes ago. T
+he effects of this update are not visible yet in the calculate
+d compliance.
+```
+
+The output breaks down as follows:
+
+1. First, `howfairis` prints which URL it's checking;
+1. Then there is the list of checks it performed with either a checkmark, or a cross. The checks are divided over the 5 categories from fair-software.eu. If at least one check in each category is valid, then the repository is considered to be compliant for that category;
+1. The calculated compliance is printed to the terminal. In the output above, only the first category is compliant, because we made sure our repository is publicly accessible.
+1. The tool checks whether your `README.md` (or `README.rst`) contains the expected badge, and will print a message if it can't find it. The same message also gets printed if the badge is different from what the tool expects;
+1. Finally, be aware that there is some server-side caching going on, which means that the tool is sometimes looking at a slightly older file. If this happens, it will print a warning in the terminal. The easiest way to fix this is to simply wait a couple of minutes after you make relevant changes to your `README.md` (The rest of the repo's file are not used for the analysis).
+
+&#9733; Update your `README.md` with the suggested badge. While you wait for the GitHub servers to expire the cache, take a look at adding a license below.
+
+So far we have not added license to the repository. Since the author of the software is automatically protected by copyright, that means nobody can (legally) copy your repository at the moment. From a legal point of view, that means others are not allowed to even `git clone` the repository. Now, if your files are on GitHub and in a public repository, this is probably not your intent. It is therefore good practice to add a license, so that others may make copies, while protecting you against liability if it may come to that.
+
+&#9733; On GitHub, use the "Add file" button, then "Create new file". In the field that says "Name your file", type "LICENSE" (capitalized by tradition). When you do this, a new button "Choose a license template" will appear in the top right. Click it, pick a license, then click "Review and submit". Commit to the `main` branch. For the purposes of the tutorial, it doesn't matter which license you pick.
+
+&#9733; Five minutes should have passed while you were working on adding a license to the repository, now re-run `howfairis`. The result should have changed; update the README accordingly.
+
+**Note on howfairis features**
+
+_Our README is written in MarkDown, but note that `howfairis` also supports `README`s written in ReStructured Text. Besides repositories on GitHub, `howfairis` supports GitLab repositories as well, albeit with some limitations: at the moment, `howfairis` can only handle repositories on gitlab.com (i.e. not on self-hosted instances), and only repositories that do not use GitLab's subgroup feature._
+
+TODO configuration
 
 ## 3. fair-software GitHub action
 
@@ -214,7 +276,16 @@ fairtally -i urls.txt
 
 At this point in the tutorial, you know how to generate a `howfairis` report on your own repo, how to monitor the status automatically using the fair-software GitHub Action, and even how to make an overview of the compliance status given a list of repositories.
 
-However, you may have found that the compliance score for your repos could still be improved. That's why the next sections are dedicated to resources, tools and workflows that can help you work on some of those aspects. You can pick and choose whichever subject you think is most interesting to you. Note that some sections assume knowledge of other sections; when this is the case, this is indicated at the top of the section as "Prerequisites".
+However, you may have found that the compliance score for your repos could still be improved. That's why the next sections cover various resources, tools, and workflows that can help you work on some of those aspects. You can pick and choose whichever subject you think is most interesting to you. Note that some sections assume knowledge of other sections; when this is the case, this is indicated at the top of the section as "Prerequisites".
+
+For convenience, use the table below to navigate to each section:
+
+- [GitHub-Zenodo integration](#extras-github-zenodo-integration)
+- [Creating a CITATION.cff file](#extras-creating-a-citationcff-file)
+- [Drafting and publishing depositions on Zenodo with zenodraft CLI](#extras-drafting-and-publishing-depositions-on-zenodo-with-zenodraft-cli)
+- [Workflow to publish to Zenodo with maximum metadata](#extras-workflow-to-publish-on-zenodo-with-maximum-metadata)
+- [Checklist for FAIR research software](#extras-checklist-for-fair-research-software)
+- [Research Software Registries](#extras-research-software-registries)
 
 ## Extras: GitHub-Zenodo integration
 
@@ -324,7 +395,7 @@ OK, we're almost near the end of this section. We just need to use `zenodraft` t
 zenodraft deposition publish --sandbox $VERSION_ID
 ```
 
-## Extras: Recommended workflow to publish on Zenodo with maximum metadata
+## Extras: Workflow to publish on Zenodo with maximum metadata
 
 **Prerequisites**
 
