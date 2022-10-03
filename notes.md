@@ -1,11 +1,15 @@
 # IEEE
 
+- first slide: 
+    - create a github account if you don't have one
+    - make sure your internet connection works
 - TODO check wifi situation at the conference
-- Mention early on that it is recommended to have a GitHub account
-- ~~TODO make tutorial materials available online (GitHub repo)~~
 - TODO get colored sticky notes
-- ~~where in the program will we gather list of repos for running fairtally~~
 - explain connection readme and howfairis score side by side
+- test installation instructions on clean ubuntu
+- test installation instructions on clean fedora
+- test installation instructions on windows with git bash
+- test `which` command on windows git bash
 
 ## interest poll
 
