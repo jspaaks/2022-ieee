@@ -205,7 +205,7 @@ So far we have not added a license to the repository. Since the author of the so
 
 Although `howfairis` already includes a variety of tests, there will always be cases not covered by the tool. For example, the GitHub interface only allows for one license, while some software packages are dual licensed. Or, maybe your software is published in a community registry that isn't recognized. For this reason, `howfairis` allows you to overrule each category using a configuration file, by default named `.howfairis.yml`.
 
-&#9733; Create a local copy of the default `howfairis.yml` file by running `howfairis` with the `-d` ("print default configuration") flag and storing that in a new file named `.howfairis.yml`:
+&#9733; Create a local copy of the default `.howfairis.yml` file by running `howfairis` with the `-d` ("print default configuration") flag and storing that in a new file named `.howfairis.yml`:
 
 ```shell
 # print default configuration
