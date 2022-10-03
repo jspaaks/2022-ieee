@@ -99,7 +99,7 @@ This should return a `python` that is local to the `env` directory, most likely 
 **This section in brief**
 
 1. Install `howfairis` from PyPI
-1. Run `howfairis` on a repository of your choice
+1. Run `howfairis` on a GitHub repository
 1. Explore the command line options
 1. Experiment with `howfairis` configuration file
 1. How to overrule a config file
@@ -137,7 +137,7 @@ Using `howfairis` with absolute paths can be done like this:
 
 &#9733; Next, create a new repository on GitHub for the experiments we'll be doing in this tutorial. Make sure to check the "Add a README file" checkbox when asked, and verify that the repository visibility is set to "Public", otherwise the tooling won't be able to see you repository.
 
-&#9733; From you terminal, run `howfairis` on the newly created repository, as follows:
+&#9733; From your terminal, run `howfairis` on the newly created repository, as follows:
 
 ```shell
 # e.g. I created a dummy repository "ieee-test-repo" under my GitHub user account "jspaaks"
@@ -191,12 +191,12 @@ The output breaks down as follows:
 1. First, `howfairis` prints which URL it's checking;
 1. Then there is the list of checks it performed with either a checkmark, or a cross. The checks are divided over the 5 categories from fair-software.eu. If at least one check in each category is valid, then the repository is considered to be compliant for that category;
 1. The calculated compliance is printed to the terminal. In the output above, only the first category is compliant, because we made sure our repository is publicly accessible.
-1. The tool checks whether your `README.md` (or `README.rst`) contains the expected badge, and will print a message if it can't find it. The same message also gets printed if the badge is different from what the tool expects;
-1. Finally, be aware that there is some server-side caching going on, which means that the tool is sometimes looking at a slightly older file. If this happens, it will print a warning in the terminal. The easiest way to fix this is to simply wait a couple of minutes after you make relevant changes to your `README.md` (The rest of the repo's file are not used for the analysis).
+1. The tool checks whether your `README.md` contains the expected badge, and will print a message if it can't find it. The same message also gets printed if the badge is different from what the tool expects;
+1. Finally, be aware that GitHub uses server-side caching for performance reasons, which means that `howfairis` is sometimes looking at a slightly older README file than what you yourself see online. If this happens, `howfairis` will print a warning in the terminal. The easiest way to fix this is to simply wait a couple of minutes after you make relevant changes to your `README.md` (The rest of the repo's file are not used for the analysis).
 
 &#9733; Update your `README.md` with the suggested badge. While you wait for the GitHub servers to expire the cache, take a look at adding a license below.
 
-So far we have not added license to the repository. Since the author of the software is automatically protected by copyright, that means nobody can (legally) copy your repository at the moment. From a legal point of view, that means others are not allowed to even `git clone` the repository. Now, if your files are on GitHub and in a public repository, this is probably not your intent. It is therefore good practice to add a license, so that others may make copies, while protecting you against liability if it may come to that.
+So far we have not added a license to the repository. Since the author of the software is automatically protected by copyright, that means nobody can (legally) copy your repository at the moment. From a legal point of view, that means others are not allowed to even `git clone` the repository. Now, if your files are on GitHub and in a public repository, this is probably not your intent. It is therefore good practice to add a license, so that others may make copies, while protecting you against liability if it may come to that.
 
 &#9733; On GitHub, use the "Add file" button, then "Create new file". In the field that says "Name your file", type "LICENSE" (capitalized by tradition). When you do this, a new button "Choose a license template" will appear in the top right. Click it, pick a license, then click "Review and submit". Commit to the `main` branch. For the purposes of the tutorial, it doesn't matter which license you pick.
 
@@ -204,9 +204,45 @@ So far we have not added license to the repository. Since the author of the soft
 
 **Note on howfairis features**
 
-_Our README is written in MarkDown, but note that `howfairis` also supports `README`s written in ReStructured Text. Besides repositories on GitHub, `howfairis` supports GitLab repositories as well, albeit with some limitations: at the moment, `howfairis` can only handle repositories on gitlab.com (i.e. not on self-hosted instances), and only repositories that do not use GitLab's subgroup feature._
+Our README is written in MarkDown, but note that `howfairis` also supports `README`s written in ReStructured Text. Besides repositories on GitHub, `howfairis` supports GitLab repositories as well, albeit with some limitations: at the moment, `howfairis` can only handle repositories on gitlab.com (i.e. not on self-hosted instances), and only repositories that do not use GitLab's subgroup feature.
 
 TODO configuration
+
+```shell
+howfairis --help
+```
+
+```shell
+howfairis -d
+howfairis -d > .howfairis.yml
+```
+
+Edit configuration file
+
+```shell
+nano .howfairis.yml
+```
+
+Test
+
+```shell
+howfairis -u .howfairis.yml https://github.com/jspaaks/ieee-test-repo
+```
+
+...but the config file needs to be on the remote so that everybody can see the reason
+
+```shell
+git add .howfairis.yml
+git commit -m "added howfairis config file"
+git push origin main
+```
+
+Check if it gets picked up:
+
+```shell
+howfairis https://github.com/jspaaks/ieee-test-repo
+```
+should include skipped reason in the output
 
 ## 3. fair-software GitHub action
 
@@ -226,7 +262,7 @@ TODO configuration
 1. Run `fairtally`
 1. Inspect `fairtally` results
 
-Example of how to get a list of repositories from an organization (doing it any other way is also fine!):
+Example of how to get a list of repositories from an organization (doing it any other way is also fine! as long as you end up with something like the content of `urls.txt` below):
 
 ```shell
 YOUR_ORG=citation-file-format
@@ -278,7 +314,7 @@ At this point in the tutorial, you know how to generate a `howfairis` report on 
 
 However, you may have found that the compliance score for your repos could still be improved. That's why the next sections cover various resources, tools, and workflows that can help you work on some of those aspects. You can pick and choose whichever subject you think is most interesting to you. Note that some sections assume knowledge of other sections; when this is the case, this is indicated at the top of the section as "Prerequisites".
 
-For convenience, use the table below to navigate to each section:
+For convenience, use the list below to navigate to each section:
 
 - [GitHub-Zenodo integration](#extras-github-zenodo-integration)
 - [Creating a CITATION.cff file](#extras-creating-a-citationcff-file)
