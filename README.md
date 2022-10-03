@@ -137,6 +137,8 @@ Using `howfairis` with absolute paths can be done like this:
 
 &#9733; Next, create a new repository on GitHub for the experiments we'll be doing in this tutorial. Make sure to check the "Add a README file" checkbox when asked, and verify that the repository visibility is set to "Public", otherwise the tooling won't be able to see you repository.
 
+Our README is written in MarkDown, but note that `howfairis` also supports `README`s written in ReStructured Text. Besides repositories on GitHub, `howfairis` supports GitLab repositories as well, albeit with some limitations: at the moment, `howfairis` can only handle repositories on gitlab.com (i.e. not on self-hosted instances), and only repositories that do not use GitLab's subgroup feature.
+
 &#9733; From your terminal, run `howfairis` on the newly created repository, as follows:
 
 ```shell
@@ -202,47 +204,90 @@ So far we have not added a license to the repository. Since the author of the so
 
 &#9733; Five minutes should have passed while you were working on adding a license to the repository, now re-run `howfairis`. The result should have changed; update the README accordingly.
 
-**Note on howfairis features**
+Although howfairis already includes a variety of tests, there will always be cases not covered by the tool. For example, the GitHub interface only allows for one license, while some software packages are dual licensed. Or, maybe your software is published in a community registry that isn't recognized. For this reason, howfairis allows you to overrule each category using a configuration file, by default named `.howfairis.yml`.
 
-Our README is written in MarkDown, but note that `howfairis` also supports `README`s written in ReStructured Text. Besides repositories on GitHub, `howfairis` supports GitLab repositories as well, albeit with some limitations: at the moment, `howfairis` can only handle repositories on gitlab.com (i.e. not on self-hosted instances), and only repositories that do not use GitLab's subgroup feature.
-
-TODO configuration
+&#9733; Create a local copy of the default `howfairis.yml` file by running `howfairis` with the `-d` ("print default configuration") flag and storing that in a new file named `.howfairis.yml`:
 
 ```shell
-howfairis --help
-```
+# print default configuration
+howfairis -d  
 
-```shell
-howfairis -d
+# pipe the output to a file (or copy-paste)
 howfairis -d > .howfairis.yml
 ```
+&#9733; Now use your favorite plain text editor to edit the configuration file. Uncomment one of the 5 `skip_*)checks_reason` lines, and make up a reason.
 
-Edit configuration file
-
-```shell
-nano .howfairis.yml
-```
-
-Test
+&#9733; To test, you need to tell `howfairis` to use the configuration file we just made, using the `-u` optional argument:
 
 ```shell
 howfairis -u .howfairis.yml https://github.com/jspaaks/ieee-test-repo
 ```
 
-...but the config file needs to be on the remote so that everybody can see the reason
+The output should now reflect the reason you gave, e.g.:
+
+```text
+Checking compliance with fair-software.eu...
+url: https://github.com/jspaaks/ieee-test-repo
+Local configuration file: .howfairis.yml
+(1/5) repository
+      ✓ has_open_repository
+(2/5) license
+      ✓ has_license
+(3/5) registry
+      × has_ascl_badge
+      × has_bintray_badge
+      × has_conda_badge
+      × has_cran_badge
+      × has_crates_badge
+      × has_maven_badge
+      × has_npm_badge
+      × has_pypi_badge
+      × has_rsd_badge
+      × is_on_github_marketplace
+(4/5) citation
+      × has_citation_file
+      × has_citationcff_file
+      × has_codemeta_file
+      × has_zenodo_badge
+      × has_zenodo_metadata_file
+(5/5) checklist
+      ✓ skipped (reason: i'm using codacy)
+
+Calculated compliance: ● ● ○ ○ ●
+
+Congratulations! The compliance of your repository exceeds the
+ current fair-software.eu badge in your README.md. You can rep
+lace it with the following snippet:
+
+[![fair-software.eu](https://img.shields.io/badge/fair--softwa
+re.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B%20%20%E2%97%8B%2
+0%20%E2%97%8F-orange)](https://fair-software.eu)
+```
+
+Great! So now we can customize the results to fit our needs using a local configuration file. However, to make sure everybody gets to see the same results, we need to make the configuration file part of the repository.
+
+&#9733; Add the configuration file to the repository, either using the command line
 
 ```shell
 git add .howfairis.yml
-git commit -m "added howfairis config file"
+git commit -m "added howfairis exception via config file"
 git push origin main
 ```
 
-Check if it gets picked up:
+or by using GitHub's interface:
+
+1. Click button "Add File" > "Create new file";
+1. Name the file `.howfairis.yml` (it has to be exactly that, including the leading dot)
+1. Then copy-paste the contents from your terminal into it;
+1. When you're ready, click the green button "Commit to new file" at the bottom.
+
+&#9733; Now all that's left to do is to verify that it gets picked up when we re-run howfairis without the `-u` parameter:
 
 ```shell
 howfairis https://github.com/jspaaks/ieee-test-repo
 ```
-should include skipped reason in the output
+
+The output should include your reason for skipping.
 
 ## 3. fair-software GitHub action
 
@@ -361,7 +406,7 @@ While you can write a `CITATION.cff` file by hand with just a text editor and a 
 ### References
 
 1. Druskat, S., Spaaks, J.H., Chue Hong, N., Haines, R., Baker, J., Bliven, S., Willighagen, E., Pérez-Suárez, D. and Konovalov, A. (2021) _Citation File Format_, Zenodo, doi: 10.5281/zenodo.5171937
-1. Spaaks, J.H., Verhoeven, S., Diblen, F., Druskat, S., Soares Siqueira, A., Garcia Gonzalez, J. and Cushing, R. (2022)_cffinit_, Zenodo, doi: 10.5281/zenodo.7032322
+1. Spaaks, J.H., Verhoeven, S., Diblen, F., Druskat, S., Soares Siqueira, A., Garcia Gonzalez, J. and Cushing, R. (2022) _cffinit_, Zenodo, doi: 10.5281/zenodo.7032322
 
 ## Extras: Drafting and publishing depositions on Zenodo with `zenodraft` CLI
 
