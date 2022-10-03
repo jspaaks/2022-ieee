@@ -332,7 +332,7 @@ jobs:
 
 ![github action workflow overview in progress](github-action-tab-in-progress.png)
 
-The Action's result will be green, iff the `howfairis` analysis yields exactly the badge that `howfairis` expected. Any difference between the calculated compliance and what the README suggests will result in an error. This can be a bit confusing sometimes, because an improvement in calculated compliance can still show up as a error if the fair-software badge in the README is still showing the previous compliance.
+The Action's result is green if and only if the `howfairis` analysis yields exactly the badge that `howfairis` expected. Any difference between the calculated compliance and what the README suggests will result in an error. This can be a bit confusing sometimes, because an improvement in calculated compliance can still show up as a error if the fair-software badge in the README is still showing the previous compliance.
 
 &#9733; If your Action status is red, make the necessary changes to make it green again. Refer to the Action's log for easy copy-paste.
 
