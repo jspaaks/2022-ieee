@@ -204,7 +204,7 @@ So far we have not added a license to the repository. Since the author of the so
 
 &#9733; Five minutes should have passed while you were working on adding a license to the repository, now re-run `howfairis`. The result should have changed; update the README accordingly.
 
-Although howfairis already includes a variety of tests, there will always be cases not covered by the tool. For example, the GitHub interface only allows for one license, while some software packages are dual licensed. Or, maybe your software is published in a community registry that isn't recognized. For this reason, howfairis allows you to overrule each category using a configuration file, by default named `.howfairis.yml`.
+Although `howfairis` already includes a variety of tests, there will always be cases not covered by the tool. For example, the GitHub interface only allows for one license, while some software packages are dual licensed. Or, maybe your software is published in a community registry that isn't recognized. For this reason, `howfairis` allows you to overrule each category using a configuration file, by default named `.howfairis.yml`.
 
 &#9733; Create a local copy of the default `howfairis.yml` file by running `howfairis` with the `-d` ("print default configuration") flag and storing that in a new file named `.howfairis.yml`:
 
@@ -215,7 +215,7 @@ howfairis -d
 # pipe the output to a file (or copy-paste)
 howfairis -d > .howfairis.yml
 ```
-&#9733; Now use your favorite plain text editor to edit the configuration file. Uncomment one of the 5 `skip_*)checks_reason` lines, and make up a reason.
+&#9733; Now use your favorite plain text editor to edit the configuration file. Uncomment one of the 5 `skip_****_checks_reason` lines, and make up a reason.
 
 &#9733; To test, you need to tell `howfairis` to use the configuration file we just made, using the `-u` optional argument:
 
@@ -264,9 +264,9 @@ re.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B%20%20%E2%97%8B%2
 0%20%E2%97%8F-orange)](https://fair-software.eu)
 ```
 
-Great! So now we can customize the results to fit our needs using a local configuration file. However, to make sure everybody gets to see the same results, we need to make the configuration file part of the repository.
+Great! So now you know how to customize the results to fit your needs by using a local configuration file. However, to make sure everybody gets to see the same results, we need to make the configuration file part of the repository.
 
-&#9733; Add the configuration file to the repository, either using the command line
+&#9733; Add the configuration file to the repository, either using the command line:
 
 ```shell
 git add .howfairis.yml
@@ -274,14 +274,14 @@ git commit -m "added howfairis exception via config file"
 git push origin main
 ```
 
-or by using GitHub's interface:
+Or by using GitHub's interface:
 
 1. Click button "Add File" > "Create new file";
 1. Name the file `.howfairis.yml` (it has to be exactly that, including the leading dot)
 1. Then copy-paste the contents from your terminal into it;
 1. When you're ready, click the green button "Commit to new file" at the bottom.
 
-&#9733; Now all that's left to do is to verify that it gets picked up when we re-run howfairis without the `-u` parameter:
+&#9733; Now all that's left to do is to verify that the configuration gets picked up when we re-run `howfairis` without the `-u` parameter:
 
 ```shell
 howfairis https://github.com/jspaaks/ieee-test-repo
@@ -296,6 +296,12 @@ The output should include your reason for skipping.
 1. GitHub Actions: workflow files, triggers
 1. GitHub Actions Marketplace
 1. Set up continuous monitoring of fair-software badge
+
+we'll use triggers
+1. manual dispatch
+1. crontab
+
+
 
 ## 4. fairtally
 
@@ -399,7 +405,9 @@ Additionally, Zenodo will use metadata from a `CITATION.cff` file while ingestin
 
 While you can write a `CITATION.cff` file by hand with just a text editor and a copy of the [_Guide to Citation File Format schema_](https://github.com/citation-file-format/citation-file-format/blob/1.2.0/schema-guide.md), it is recommended to use the cffinit website: https://bit.ly/cffinit [2]. The website will help you write a valid `CITATION.cff.`
 
-&#9733; Use the cffinit website to generate a `CITATION.cff` file for your software, then upload it to your repository on GitHub if you have one. If you did this for the repository where you have the fair-software GitHub Action enabled, the status of that action will likely have changed to an error. Refer to the fair-software action's log output to learn how to make the action green again.
+&#9733; Use the cffinit website to generate a `CITATION.cff` file for your software, then upload it to your tutorial repository on GitHub. Verify that the GitHub interface now shows a "Cite this repository" widget.
+
+&#9733; Adding a `CITATION.cff` affects the status of the fair-software badge. Use the manual dispatch trigger GitHub's Actions tab to start the fair-software workflow. It should finish with an error; refer to the fair-software action's log output to learn how to make the action green again.
 
 &#9733; If you have the GitHub-Zenodo integration enabled for this repository (see previous section), try making a release and see what metadata from `CITATION.cff` is used to enrich the corresponding record on Zenodo Sandbox.
 
