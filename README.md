@@ -301,7 +301,40 @@ we'll use triggers
 1. manual dispatch
 1. crontab
 
+In the previous section, you used `howfairis` to run an analysis from your local machine. This is great for general purpose use, and while you are still debugging, but it can be convenient to set up a GitHub Action that automatically re-evaluates the status of the badge, maybe once every few days or so.
 
+&#9733; The `fair-software` GitHub Action that is available from GitHub Marketplace (https://github.com/marketplace/actions/fair-software) can be used to automate the `howfairis` analysis.
+
+&#9733; Use the GitHub graphical user interface to create a new file `.github/workflows/fair-software.yml`. You can use a different filename if you like, but the path must be exactly like it is here (including the leading dot in `.github`). Copy the workflow file below into the newly created file.
+
+```yaml
+name: fair-software
+
+on:
+  workflow_dispatch:
+  schedule:
+    # every 5 days at 03:00, see https://crontab.guru
+    - cron: '0 3 */5 * *'
+
+jobs:
+  verify:
+    name: "fair-software"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: fair-software/howfairis-github-action@0.2.1
+        with:
+          MY_REPO_URL: "https://github.com/${{ github.repository }}"
+```
+
+&#9733; Navigate to your repo's Actions tab. There, you should now see the fair-software workflow listed on the left:
+
+![github action workflow overview empty](github-action-tab-empty.png)
+
+&#9733; Click on the fair-software workflow, the content on the right should now show a button "Run workflow" (see image below). Click it, let branch be the `main` branch, and click the green "Run workflow" button (It takes a few seconds before you get any visual feedback).
+
+![github action workflow overview in progress](github-action-tab-in-progress.png)
+
+The Action's result will be green, iff the `howfairis` analysis yields exactly the badge that `howfairis` expected. Any difference between the calculated compliance and what the README suggests will result in an error. This can be a bit confusing sometimes, because an improvement in calculated compliance can still show up as a error if the fair-software badge in the README is still showing the previous compliance.
 
 ## 4. fairtally
 
@@ -407,7 +440,7 @@ While you can write a `CITATION.cff` file by hand with just a text editor and a 
 
 &#9733; Use the cffinit website to generate a `CITATION.cff` file for your software, then upload it to your tutorial repository on GitHub. Verify that the GitHub interface now shows a "Cite this repository" widget.
 
-&#9733; Adding a `CITATION.cff` affects the status of the fair-software badge. Use the manual dispatch trigger GitHub's Actions tab to start the fair-software workflow. It should finish with an error; refer to the fair-software action's log output to learn how to make the action green again.
+&#9733; Adding a `CITATION.cff` affects the status of the fair-software badge. Use the manual dispatch trigger on GitHub's Actions tab to start the fair-software workflow. It should finish with an error; refer to the fair-software action's log output to learn how to make the action green again.
 
 &#9733; If you have the GitHub-Zenodo integration enabled for this repository (see previous section), try making a release and see what metadata from `CITATION.cff` is used to enrich the corresponding record on Zenodo Sandbox.
 
