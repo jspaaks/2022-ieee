@@ -334,6 +334,12 @@ jobs:
 
 The Action's result will be green, iff the `howfairis` analysis yields exactly the badge that `howfairis` expected. Any difference between the calculated compliance and what the README suggests will result in an error. This can be a bit confusing sometimes, because an improvement in calculated compliance can still show up as a error if the fair-software badge in the README is still showing the previous compliance.
 
+&#9733; If your Action status is red, make the necessary changes to make it green again. Refer to the Action's log for easy copy-paste.
+
+&#9733; Update your README with the status badge for the GitHub Action by Navigating to the log of the workflow, then clicking the ellipsis button in the top right corner, then click the button "Copy status badge Markdown":
+
+![github action copy status badge](github-action-copy-status-badge.png)
+
 ## 4. fairtally
 
 **This section in brief**
