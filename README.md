@@ -6,8 +6,7 @@
 | ---         | ---        | ---                          | ---          |
 | 15m         | 15m        | fair-software.nl, FAIR       | presentation |
 | 10m         | 25m        | howfairis                    | demo         |
-| 20m         | 45m        | ~                            | hands on     |
-| 10m         | 55m        | howfairis config file        | demo         |
+| 30m         | 55m        | ~                            | hands on     |
 | 10m         | 1h05m      | **break**                    | &nbsp;       |
 | 15m         | 1h20m      | fair-software GitHub Action  | demo         |
 | 20m         | 1h40m      | ~                            | hands on     |
