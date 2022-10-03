@@ -301,9 +301,7 @@ we'll use triggers
 1. manual dispatch
 1. crontab
 
-In the previous section, you used `howfairis` to run an analysis from your local machine. This is great for general purpose use, and while you are still debugging, but it can be convenient to set up a GitHub Action that automatically re-evaluates the status of the badge, maybe once every few days or so.
-
-&#9733; The `fair-software` GitHub Action that is available from GitHub Marketplace (https://github.com/marketplace/actions/fair-software) can be used to automate the `howfairis` analysis.
+In the previous section, you used `howfairis` to run an analysis from your local machine. This is great for general purpose use, and while you are still debugging, but it can be convenient to set up a GitHub Action that automatically re-evaluates the status of the badge, maybe once every few days or so. The `fair-software` GitHub Action that is available from GitHub Marketplace (https://github.com/marketplace/actions/fair-software) uses `howfairis` to automate the analysis.
 
 &#9733; Use the GitHub graphical user interface to create a new file `.github/workflows/fair-software.yml`. You can use a different filename if you like, but the path must be exactly like it is here (including the leading dot in `.github`). Copy the workflow file below into the newly created file.
 
@@ -330,7 +328,7 @@ jobs:
 
 ![github action workflow overview empty](github-action-tab-empty.png)
 
-&#9733; Click on the fair-software workflow, the content on the right should now show a button "Run workflow" (see image below). Click it, let branch be the `main` branch, and click the green "Run workflow" button (It takes a few seconds before you get any visual feedback).
+&#9733; Click on the fair-software workflow, the content on the right should now show a button "Run workflow" (see image below). Click it, let branch be the `main` branch, and click the green "Run workflow" button. It takes a few seconds before you get any visual feedback, but then you'll see the interface change to something like this:
 
 ![github action workflow overview in progress](github-action-tab-in-progress.png)
 
