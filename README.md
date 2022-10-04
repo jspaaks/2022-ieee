@@ -119,6 +119,12 @@ howfairis --version
 
 (mine says: `version: 0.14.2`).
 
+Printing help info works in the usual way:
+
+```shell
+howfairis --help
+```
+
 If you didn't get any error messages during the `pip install` step, but can't access the command line program, you may have to update your `PATH` environment variable, or use absolute paths to point to the command line program.
 
 Updating your `PATH` can be done as follows:
