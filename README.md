@@ -24,7 +24,7 @@
 
 **Note for Windows users only**
 
-This tutorial makes extensive use of the command line. If you're on Windows, we recommend you install "Git Bash" from the "Git for Windows" package. You can download it from here: https://gitforwindows.org/. Git Bash will allow you to run terminal emulator commands just like you would on Linux/Mac systems.
+This tutorial makes extensive use of the command line. If you're on Windows, we recommend you install "Git Bash" from the "Git for Windows" package. You can download it from here: https://gitforwindows.org/. Git Bash will allow you to run terminal emulator commands just like you would on Linux/Mac systems. Additionally, all the tools we'll be using in this tutorial are installable via the third-party package manager for Windows named [Chocolatey](https://chocolatey.org/) or `choco` for short. You can install `choco` following the instructions from https://community.chocolatey.org/courses/installation/installing?method=installing-chocolatey#cmd. The dropdown list at the top of that page also offers alternative ways of installing `choco`.
 
 **Action required (&#9733;)**
 
@@ -38,7 +38,7 @@ Throughout this tutorial, you'll encounter the &#9733; symbol; this indicates th
 python3 --version
 ```
 
-Make sure that the version number you're getting is 3.7 or higher. If you don't have Python yet, install from your operating system's repositories, or download and install Python from https://www.python.org/downloads/.
+Make sure that the version number you're getting is 3.7 or higher. If you don't have Python yet, install from your operating system's repositories (Mac/Linux), using `choco` (Windows), or download and install Python from https://www.python.org/downloads/.
 
 &#9733; Next, we need `pip` as well. Check if you have `pip` by:
 
@@ -46,21 +46,28 @@ Make sure that the version number you're getting is 3.7 or higher. If you don't 
 python3 -m pip --version
 ```
 
-For Windows and Mac (via `homebrew`), you should already have `pip` if you have Python. For Linux, you may need to install `pip` separately. While you're at it, now is probably a good time to install some other dependencies as well:
+For Windows and Mac (if you installed Python via `homebrew`), you should already have `pip` if you have Python. For Linux, you may need to install `pip` separately:
 
 ```shell
 # Ubuntu-like systems
 sudo apt update
-sudo apt install python3-venv python3-pip
+sudo apt install python3-pip
 
 # Fedora
-sudo dnf install python3-pip python3-wheel
+sudo dnf install python3-pip
 ```
 
 or
 
 ```shell
 python3 -m ensurepip --default-pip
+```
+
+Finally, we'll also be using virtual environments, this may require additional packages to be installed if you're on Linux/Mac:
+
+```shell
+# Ubuntu like systems
+sudo apt install python3-venv
 ```
 
 For more information on installing Python and `pip`, visit
@@ -493,11 +500,22 @@ While you can write a `CITATION.cff` file by hand with just a text editor and a 
 1. use `zenodraft` to publish a local file to Zenodo Sandbox
 1. use `zenodraft` to attach metadata to the new deposition on Zenodo Sandbox
 
+**Prerequisites**
+
+1. section above on Citation File Format
+
 Since we're only exploring at the moment, this tutorial uses the Zenodo Sandbox environment instead of regular Zenodo. The `zenodraft` commands work the same for either target platform, just make sure to leave out the `--sandbox` flag, and don't forget you need separate tokens for each platform.
 
-<!-- TODO add instructions for installing Node and npm via nvm and nvs, with link to nodejs.org-->
-<!-- condense sections on zenodraft to one section that starts with a base file, then adds the equivalent of CITATION.cff into it using cffconvert -->
-
+<!-- TODO add instructions for installing Node and npm via nvm and nvs, with link to nodejs.org 
+# Linux/Mac:
+https://github.com/nvm-sh/nvm section Install & Update script
+sudo apt install jq
+python3 -m pip install cffconvert
+# Windows:
+choco install nvs
+choco install jq
+python3 -m pip install cffconvert
+-->
 &#9733; Before we get started, make sure you have the required programs:
 
 ```shell
@@ -507,22 +525,28 @@ npm --version        # I'm on 8.5.5
 zenodraft --version  # I'm on 0.12.0
 ```
 
-&#9733; In order to use Zenodo Sandbox, you are required to identify yourself using a token. Get the token here https://sandbox.zenodo.org/account/settings/applications/. `zenodraft` will look for an environment variable by the name of `ZENODO_SANDBOX_ACCESS_TOKEN` whose value you should set to the value of your token.
+<!-- TODO explain concept / version -->
+![zenodo versions widget](zenodo-versions-widget.png)
+
+<!-- TODO explain tokens, where to get them -->
+&#9733; In order to let zenodraft upload items to Zenodo Sandbox, you are required to identify yourself using a token. Get the token here https://sandbox.zenodo.org/account/settings/applications/. `zenodraft` will look for an environment variable by the name of `ZENODO_SANDBOX_ACCESS_TOKEN` whose value you should set to the value of your token, as follows:
 
 ```shell
 # add tokens to terminal
 export ZENODO_SANDBOX_ACCESS_TOKEN=<your-zenodo-sandbox-token>
 ```
-
-&#9733; Create an empty draft deposition in a new collection. If successful, it will return the identifier for the first version in the new collection, which is empty at the moment and still a draft / unpublished.
+<!-- TODO use zenodraft to create a first version in a new concept on sandbox -->
+&#9733; Run the command below to create an empty draft deposition in a new collection on Zenodo Sandbox. If successful, it will print the identifier for the first version in the new collection. The command below uses the `ENV_VARIABLE=$(command)` syntax to capture the printed version identifier.
 
 ```shell
 VERSION_ID=$(zenodraft deposition create concept --sandbox)
+echo $VERSION_ID  # will print a number
 ```
 
-&#9733; Now point your browser to https://sandbox.zenodo.org and click "Upload" (button at the center top of the page; may ask you to provide credentials). After the jump, you should see a list of your depositions on Zenodo Sandbox. If everything worked, the top one is the one you just made. It should still be in unpublished/draft mode.
+&#9733; Now point your browser to https://sandbox.zenodo.org and click "Upload" (button at the center top of the page; it may ask you to log in). After the jump, you should see a list of your depositions on Zenodo Sandbox. If everything worked, the top one is the one you just made. It should still be in unpublished/draft mode.
 
-&#9733; Add a file to the draft deposition. Just use some dummy file, but make sure it has some content otherwise Zenodo doesn't play nice.
+<!-- TODO use zenodraft to add a file into the draft deposition -->
+&#9733; Create a new file on your local system. Just use some dummy file, but make sure it has some content otherwise Zenodo doesn't play nice.
 
 ```shell
 # make some fake data
@@ -534,51 +558,105 @@ echo 'some data' > thefile.txt
 ```shell
 zenodraft file add --sandbox $VERSION_ID thefile.txt
 ```
+<!-- TODO use zenodraft to add simple minimal metadata -->
+Currently the metadata for your draft deposition is probably looking a bit sparse. Now, you could update the metadata by hand using Zenodo's graphical user interface, but doing this for every software release might get a bit tedious, so let's automate that. To do so, you can use dedicated metadata files which you can store with the other files in you repo. Here is an example of a minimal metadata file:
 
-&#9733; Next, add some metadata to the deposition. We can store this metadata in a local file, typically named `.zenodo.json`. 
+```json
+{
+  "access_right": "open",
+  "upload_type": "other",
+  "title": "The title",
+  "license": "Apache-2.0",
+  "description": "The description"
+}
+```
+
+Zenodo metadata file are written in JSON. You can use [JSONLint](https://jsonlint.com) to make sure your JSON files are valid syntax.
+
+&#9733; Create an empty file named `.zenodo.minimal.json`. Add the metadata to the deposition using:
 
 ```shell
 # add the metadata using data from a metadata file
-zenodraft metadata update --sandbox $VERSION_ID .zenodo.json
+zenodraft metadata update --sandbox $VERSION_ID .zenodo.minimal.json
 ```
 
-Zenodo supports a lot of metadata, but its documentation is a bit sparse at the moment. The unofficial JSONschema for Zenodo depositions is available here: https://github.com/zenodraft/metadata-schema-zenodo. You can use tools such as JSONlint (https://jsonlint.com) to make sure the file you're writing is valid JSON, and tools like JSONSchemaValidator (https://www.jsonschemavalidator.net/) to make sure the JSON follows the layout that Zenodo expects.
-
-&#9733; For a glimpse of what is possible, have a look at https://sandbox.zenodo.org/record/1049232, a dummy deposition where we tried to use all the supported properties.
-
-OK, we're almost near the end of this section. We just need to use `zenodraft` to finalize the deposition. Note that once you finalize a deposition, you can no longer update the files in the deposition (but the metadata can still be updated afterwards). Alternatively, you can finalize a deposition by navigating to the Zenodo Sandox interface and clicking the button there. This latter way can be especially useful because it gives you the opportunity to inspect the deposition before publishing it.
-
-&#9733; Finalize the deposition with the command below, or instead do the same thing but use the Zenodo interface:
+&#9733; Inspect the draft deposition on https://sandbox.zenodo.org, and if everything looks good, finalize it using:
 
 ```shell
 zenodraft deposition publish --sandbox $VERSION_ID
 ```
 
-## Extras: Workflow to publish on Zenodo with maximum metadata
+Note that once you finalize a deposition, you can no longer update the files in the deposition (but the metadata can still be updated afterwards). Instead of the command line, you can also finalize a deposition by navigating to the Zenodo Sandbox interface and clicking the button there. This latter way can be especially useful because it gives you the opportunity to inspect the deposition before publishing it.
 
-**Prerequisites**
+Afterwards, you should be able to see your published deposition on Zenodo Sandbox https://sandbox.zenodo.org/record/<your version id>.
 
-1. section above on Citation File Format
-1. section above on `zenodraft`
-1. basic knowledge of GitHub Actions
+<!-- TODO then add the equivalent of CITATION.cff into it using cffconvert and jq -->
+
+While this is all great, the deposition's metadata does not currently include any of the citation information that we put in `CITATION.cff`. It would be really nice if we can use those data without having to keep two files in sync. Luckily, this is possible by using a tool named `cffconvert`, available from PyPI.
+
+&#9733; Install cffconvert from PyPI using:
+
+```shell
+# make sure your python virtual environment has been
+# activated for this terminal
+python3 -m pip install cffconvert
+```
+
+`cffconvert` can convert the data from your `CITATION.cff` into a variety of other formats.
+
+&#9733; Convert the citation metadata from your CITATION.cff to Zenodo metadata using:
+
+```shell
+cffconvert -f zenodo -o .zenodo.citation.json
+```
+
+This will generate a new file `.zenodo.citation.json` containing the Zenodo equivalent of your `CITATION.cff` data.
+
+Now we need to merge `.zenodo.minimal.json` with `.zenodo.citation.json` to get the required metadata file. For this we can use `jq`, a program with which you can wrangle JSON files. For example, given two JSON files `a.json` and `b.json`
+```json
+{
+  "a": 3
+}
+```
+```json
+{
+  "b": "hello"
+}
+```
+
+we can use `jq` as follows to combine them:
+```shell
+cat a.json b.json | jq -s add
+```
+
+The result will be:
+
+```json
+{
+  "a": 3,
+  "b": "hello"
+}
+```
+
+&#9733; Use `jq` to combine `.zenodo.minimal.json` with `.zenodo.citation.json` and use the result to update the metadata of your deposition (Zenodo allows updating metadata after finalizing the deposition), as follows:
+
+```shell
+cat .zenodo.minimal.json .zenodo.citation.json | jq -s add > .zenodo.json
+zenodraft metadata update --sandbox $VERSION_ID .zenodo.json
+```
+
+<!-- TODO explain how to use jsonschema validator to create all the metadata -->
+<!-- TODO use jq to combine minimal, citation, extras metadata into one using jq -->
+
+Zenodo supports a lot of metadata, but its documentation is a bit sparse at the moment. The _unofficial_ JSONschema for Zenodo depositions is available here: https://github.com/zenodraft/metadata-schema-zenodo. You can use tools such as JSONlint (https://jsonlint.com) to make sure the file you're writing is valid JSON, and tools like JSONSchemaValidator (https://www.jsonschemavalidator.net/) to make sure the JSON follows the layout that Zenodo expects.
+
+&#9733; For a glimpse of what is possible, have a look at https://sandbox.zenodo.org/record/1049232, a dummy deposition where we tried to use all the supported properties.
+
+## Extras: Checklist for FAIR research software
 
 **This section in brief**
 
-1. Take a GitHub repo
-1. Add a `CITATION.cff` file
-1. Add the `zenodraft` GitHub action
-1. Configure the workflow such that it will create a new version in an existing collection on Zenodo Sandbox each time a new release is published on GitHub.
-1. Update the workflow file with a step to convert data from CITATION.cff to equivalent Zenodo JSON
-1. Update the workflow file with a step to merge metadata from different sources into one file, which is then used when pushing the deposition to Zenodo Sandbox.
-
-Problems with Zenodo-GitHub integration:
-
-- when using CITATION.cff in your repo, minor ingestion errors (e.g. `name-particle`)
-- CITATION.cff ingestion supports only small subset of what Zenodo metadata can do
-
-In the current situation, one is forced to choose between good metadata rendering on GitHub citation widget, or good and extensive metadata on Zenodo. However, by combining `cffconvert`, `zenodraft`, GitHub actions, and `jq` (a command line JSON processor program), it's possible to have the best of both worlds. The rest of this section is dedicated to outlining the required workflow.
-
-## Extras: Checklist for FAIR research software
+1. Explore the interactive self-assessment FAIR checklist
 
 The checklist we will use in this section is the result of a collaboration between Australian Research Data Council and Netherlands eScience Center. The questions in the checklist are based on discussions from the [FAIR4RS](https://www.rd-alliance.org/groups/fair-research-software-fair4rs-wg) initiative. Although the checklist is already in a usable state, be aware that it is still a work in progress. In particular, the checklist is hosted at GitHub pages at the moment. Because GitHub Pages URLs are a bit unwieldy, it's likely that the URL will change. Be aware that this may break hyperlinks, which may mean that you have to redo any previous self assessments (which isn't a lot of work if you have no more than a handful of projects, but still).
 
@@ -597,6 +675,10 @@ The advantage of this approach is that when visitors come to the project's READM
 &#9733; Go to https://ardc-fair-checklist.github.io/ardc-fair-checklist and see for yourself!
 
 ## Extras: Research Software Registries
+
+**This section in brief**
+
+1. Explore Research Software Registries
 
 In order for software to be used by others, they need to be able to find it, and once found, visitors must be able to recognize that it will help them with whatever problem they are trying to solve. For this, it is really helpful if you publish your software in a software registry and provide a description and some metadata there. Such registries typically employ so-called Search Engine Optimization (SEO) techniques to tell search engines what each software package is about, so that they in turn can include the relevant links when people use their search portals.
 
