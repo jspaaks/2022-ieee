@@ -300,9 +300,9 @@ The output should include your reason for skipping.
 
 1. GitHub Actions: workflow files, triggers
 1. GitHub Actions Marketplace
-1. Set up continuous monitoring of fair-software badge
+1. Setting up continuous monitoring of fair-software badge
 
-In the previous section, you used `howfairis` to run an analysis from your local machine. This is great for general purpose use, and while you are still debugging, but it can be convenient to set up a GitHub Action that automatically re-evaluates the status of the badge, maybe once every few days or so. The `fair-software` GitHub Action that is available from GitHub Marketplace (https://github.com/marketplace/actions/fair-software) uses `howfairis` to automate the analysis.
+In the previous section, you used `howfairis` to run an analysis from your local machine. This is great for general purpose use, and while you are still debugging, but it would be convenient to be able to automatically re-run the howfairis analysis, maybe once every few days or so. The `fair-software` GitHub Action that is available from GitHub Marketplace (https://github.com/marketplace/actions/fair-software) uses `howfairis` to do exactly that.
 
 &#9733; Use github.com's graphical user interface to create a new file `.github/workflows/fair-software.yml`. You can use a different filename if you like, but the path must be exactly like it is here (including the leading dot in `.github`). Copy the workflow file below into the newly created file.
 
@@ -324,6 +324,14 @@ jobs:
           MY_REPO_URL: "https://github.com/${{ github.repository }}"
 ```
 
+Besides `name`, the workflow file above has two other properties defined at the top level: `on` and `jobs`. `on` is used to specify what events can trigger the workflow. Here, we're using two events `workflow_dispatch` and `schedule`. `workflow_dispatch` lets the user start the workflow by hand via a button on GitHub.com, while `schedule` will start the workflow's jobs based on a schedule defined by the `cron` job parameters, see Cron's wiki page [here](https://en.wikipedia.org/wiki/Cron) or https://crontab.guru for a human readable interpretation of the `cron` string.
+
+The second property defined at the top level is `jobs`, this is essentially a list of tasks that the workflow will execute when triggered. It defines the operating system to run on (here: Linux Ubuntu, there are also options for Mac and Windows). Our workflow has just one step, and uses a pre-existing GitHub Action that is available from the GitHub Marketplace. Such GitHub Actions are identified by the GitHub organization and repository where they are maintained, followed by an identifier for the version. Workflow files can have more than one step. For more information on GitHub Actions, please refer to the documentation: https://docs.github.com/en/actions.
+
+When writing workflow files, it is sometimes useful to use a linter for YAML files (workflows are written in YAML). One such linter is http://www.yamllint.com/. just copy paste your code in there and click the button labeled "Go".
+
+<!-- TODO add link to github documentation about github actions -->
+
 &#9733; Navigate to your repo's Actions tab. There, you should now see the fair-software workflow listed on the left:
 
 ![github action workflow overview empty](github-action-tab-empty.png)
@@ -340,6 +348,10 @@ The Action's result is green if and only if the `howfairis` analysis yields exac
 
 ![github action copy status badge](github-action-copy-status-badge.png)
 
+The README should now look more or less like the image below depending on which categories you chose to skip in the previous section:
+
+![github test repo with badges](github-test-repo-with-badges.png)
+
 ## 4. fairtally
 
 **This section in brief**
@@ -349,6 +361,11 @@ The Action's result is green if and only if the `howfairis` analysis yields exac
 1. Get access token for relevant platforms
 1. Run `fairtally`
 1. Inspect `fairtally` results
+
+<!-- TODO add installation instructions fairtally -->
+<!-- TODO rework making the list of URLs -->
+<!-- TODO add instructions for getting tokens and why you need them-->
+<!-- TODO add a few sentences interpreting the fairtally results-->
 
 Example of how to get a list of repositories from an organization (doing it any other way is also fine! as long as you end up with something like the content of `urls.txt` below):
 
@@ -396,7 +413,7 @@ fairtally -i urls.txt
 
 ![fairtally result](tally.html.png)
 
-## Where to go from here
+## 5. Where to go from here
 
 At this point in the tutorial, you know how to generate a `howfairis` report on your own repo, how to monitor the status automatically using the fair-software GitHub Action, and even how to make an overview of the compliance status given a list of repositories.
 
@@ -464,6 +481,9 @@ While you can write a `CITATION.cff` file by hand with just a text editor and a 
 1. use `zenodraft` to attach metadata to the new deposition on Zenodo Sandbox
 
 Since we're only exploring at the moment, this tutorial uses the Zenodo Sandbox environment instead of regular Zenodo. The `zenodraft` commands work the same for either target platform, just make sure to leave out the `--sandbox` flag, and don't forget you need separate tokens for each platform.
+
+<!-- TODO add instructions for installing Node and npm via nvm and nvs, with link to nodejs.org-->
+<!-- condense sections on zenodraft to one section that starts with a base file, then adds the equivalent of CITATION.cff into it using cffconvert -->
 
 &#9733; Before we get started, make sure you have the required programs:
 
