@@ -302,13 +302,9 @@ The output should include your reason for skipping.
 1. GitHub Actions Marketplace
 1. Set up continuous monitoring of fair-software badge
 
-we'll use triggers
-1. manual dispatch
-1. crontab
-
 In the previous section, you used `howfairis` to run an analysis from your local machine. This is great for general purpose use, and while you are still debugging, but it can be convenient to set up a GitHub Action that automatically re-evaluates the status of the badge, maybe once every few days or so. The `fair-software` GitHub Action that is available from GitHub Marketplace (https://github.com/marketplace/actions/fair-software) uses `howfairis` to automate the analysis.
 
-&#9733; Use the GitHub graphical user interface to create a new file `.github/workflows/fair-software.yml`. You can use a different filename if you like, but the path must be exactly like it is here (including the leading dot in `.github`). Copy the workflow file below into the newly created file.
+&#9733; Use github.com's graphical user interface to create a new file `.github/workflows/fair-software.yml`. You can use a different filename if you like, but the path must be exactly like it is here (including the leading dot in `.github`). Copy the workflow file below into the newly created file.
 
 ```yaml
 name: fair-software
@@ -321,7 +317,6 @@ on:
 
 jobs:
   verify:
-    name: "fair-software"
     runs-on: ubuntu-latest
     steps:
       - uses: fair-software/howfairis-github-action@0.2.1
