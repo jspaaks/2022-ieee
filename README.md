@@ -330,8 +330,6 @@ The second property defined at the top level is `jobs`, this is essentially a li
 
 When writing workflow files, it is sometimes useful to use a linter for YAML files (workflows are written in YAML). One such linter is http://www.yamllint.com/. just copy paste your code in there and click the button labeled "Go".
 
-<!-- TODO add link to github documentation about github actions -->
-
 &#9733; Navigate to your repo's Actions tab. There, you should now see the fair-software workflow listed on the left:
 
 ![github action workflow overview empty](github-action-tab-empty.png)
@@ -362,7 +360,22 @@ The README should now look more or less like the image below depending on which 
 1. Run `fairtally`
 1. Inspect `fairtally` results
 
-<!-- TODO add installation instructions fairtally -->
+In this part, we'll use an second tool that is installable from PyPI. The tool is called fairtally, and is designed to be a wrapper around howfairis. It facilitates iterating over a list of repositories, running the howfairis analysis for each one, and collating the results into an interactive Web App.
+
+&#9733; Install `fairtally` into the virtual environment you created previously by:
+
+```shell
+python3 -m pip install fairtally
+```
+
+```shell
+# make urls.txt with two urls in it
+# run fairtally -i urls.txt
+# look at results.
+# more repos more problems,
+# create token for github (and / or gitlab)
+```
+
 <!-- TODO rework making the list of URLs -->
 <!-- TODO add instructions for getting tokens and why you need them-->
 <!-- TODO add a few sentences interpreting the fairtally results-->
