@@ -17,6 +17,11 @@
 
 ## 1. Preparation
 
+**Prerequisites**
+
+1. Have working internet connection
+1. Have a GitHub account
+
 **This section in brief**
 
 1. Install Python, pip
@@ -57,16 +62,10 @@ sudo apt install python3-pip
 sudo dnf install python3-pip
 ```
 
-or
-
-```shell
-python3 -m ensurepip --default-pip
-```
-
 Finally, we'll also be using virtual environments, this may require additional packages to be installed if you're on Linux/Mac:
 
 ```shell
-# Ubuntu like systems
+# Ubuntu-like systems
 sudo apt install python3-venv
 ```
 
@@ -331,31 +330,31 @@ jobs:
           MY_REPO_URL: "https://github.com/${{ github.repository }}"
 ```
 
-Besides `name`, the workflow file above has two other properties defined at the top level: `on` and `jobs`. `on` is used to specify what events can trigger the workflow. Here, we're using two events `workflow_dispatch` and `schedule`. `workflow_dispatch` lets the user start the workflow by hand via a button on GitHub.com, while `schedule` will start the workflow's jobs based on a schedule defined by the `cron` job parameters, see Cron's wiki page [here](https://en.wikipedia.org/wiki/Cron) or https://crontab.guru for a human readable interpretation of the `cron` string.
+Besides `name`, the workflow file above has two other properties defined at the top level: `on` and `jobs`. `on` is used to specify what events can trigger the workflow. Here, we're using two events `workflow_dispatch` and `schedule`. `workflow_dispatch` lets the user start the workflow by hand via a button on GitHub.com, while `schedule` will start the workflow's jobs based on a schedule defined by the `cron` job parameters. See Cron's wiki page [here](https://en.wikipedia.org/wiki/Cron) or [https://crontab.guru](https://crontab.guru/#0_3_*/5_*_*) for a human readable interpretation of the `cron` string.
 
-The second property defined at the top level is `jobs`, this is essentially a list of tasks that the workflow will execute when triggered. It defines the operating system to run on (here: Linux Ubuntu, there are also options for Mac and Windows). Our workflow has just one step, and uses a pre-existing GitHub Action that is available from the GitHub Marketplace. Such GitHub Actions are identified by the GitHub organization and repository where they are maintained, followed by an identifier for the version. Workflow files can have more than one step. For more information on GitHub Actions, please refer to the documentation: https://docs.github.com/en/actions.
+The second property defined at the top level is `jobs`, this is essentially a list of tasks that the workflow will execute when triggered. It defines the operating system to run on (here: Linux Ubuntu, but there are also options for Mac and Windows). Our workflow has just one step, and `uses` a pre-existing GitHub Action that is available from the GitHub Marketplace (`fair-software/howfairis-github-action`). Such GitHub Actions are identified by the GitHub organization and repository where they are maintained, followed by an identifier for the version. Workflow files can have more than one step. For more information on GitHub Actions, please refer to the documentation: https://docs.github.com/en/actions.
 
-When writing workflow files, it is sometimes useful to use a linter for YAML files (workflows are written in YAML). One such linter is http://www.yamllint.com/. just copy paste your code in there and click the button labeled "Go".
+When writing workflow files, it is sometimes useful to use a linter for YAML files (workflows are written in YAML). One such linter is http://www.yamllint.com/. Just copy paste your code in there and click the button labeled "Go".
 
-&#9733; Navigate to your repo's Actions tab. There, you should now see the fair-software workflow listed on the left:
+&#9733; Navigate to your repo's Actions tab. There, you should see the fair-software workflow listed on the left:
 
-![github action workflow overview empty](github-action-tab-empty.png)
+![github action workflow overview empty](images/github-action-tab-empty.png)
 
 &#9733; Click on the fair-software workflow, the content on the right should now show a button "Run workflow" (see image below). Click it, let branch be the `main` branch, and click the green "Run workflow" button. It takes a few seconds before you get any visual feedback, but then you'll see the interface change to something like this:
 
-![github action workflow overview in progress](github-action-tab-in-progress.png)
+![github action workflow overview in progress](images/github-action-tab-in-progress.png)
 
-The Action's result is green if and only if the `howfairis` analysis yields exactly the badge that `howfairis` expected. Any difference between the calculated compliance and what the README suggests will result in an error. This can be a bit confusing sometimes, because an improvement in calculated compliance can still show up as a error if the fair-software badge in the README is still showing the previous compliance.
+The Action's result is green if and only if the `howfairis` analysis yields exactly the badge that `howfairis` expected. Any difference between the calculated compliance and what the README suggests will result in an error. This can be a bit confusing sometimes, because an improvement in calculated compliance can show up as an error if the fair-software badge in the README is still showing the previous compliance.
 
 &#9733; If your Action status is red, make the necessary changes to make it green again. Refer to the Action's log for easy copy-paste.
 
 &#9733; Update your README with the status badge for the GitHub Action by Navigating to the log of the workflow, then clicking the ellipsis button in the top right corner, then click the button "Copy status badge Markdown":
 
-![github action copy status badge](github-action-copy-status-badge.png)
+![github action copy status badge](images/github-action-copy-status-badge.png)
 
 The README should now look more or less like the image below depending on which categories you chose to skip in the previous section:
 
-![github test repo with badges](github-test-repo-with-badges.png)
+![github test repo with badges](images/github-test-repo-with-badges.png)
 
 ## 4. fairtally
 
@@ -367,7 +366,7 @@ The README should now look more or less like the image below depending on which 
 1. Run `fairtally`
 1. Inspect `fairtally` results
 
-In this part, we'll use an second tool that is installable from PyPI. The tool is called fairtally, and is designed to be a wrapper around howfairis. It facilitates iterating over a list of repositories, running the howfairis analysis for each one, and collating the results into an interactive Web App.
+In this part, we'll use an second tool that is installable from PyPI. The tool is called `fairtally`, and is designed to be a wrapper around `howfairis`. It facilitates iterating over a list of repositories, running the `howfairis` analysis for each one, and collating the results into an interactive Web App.
 
 &#9733; Install `fairtally` into the virtual environment you created previously by:
 
@@ -431,7 +430,7 @@ fairtally -i urls.txt
 
 &#9733; Once it finishes, open the generated `tally.html` file in your browser to inspect the results. It should look more or less like this:
 
-![fairtally result](tally.html.png)
+![fairtally result](images/tally.html.png)
 
 ## 5. Where to go from here
 
@@ -463,7 +462,7 @@ If you're setting up the integration for a GitHub organization (as opposed to yo
 
 There, you will find a list of GitHub organizations that you're an Admin for. Next to each organization, there will be a "Grant" button (see picture below) to allow the OAuth app to communicate with Zenodo / Zenodo Sandbox or your behalf. For organizations where you don't have enough permissions, there will be a "Request" button, to notify the organization administrators.
 
-![zenodo sandbox granting access](zenodo-sandbox-oauth-granting-access.png)
+![zenodo sandbox granting access](images/zenodo-sandbox-oauth-granting-access.png)
 
 ### References
 
@@ -473,7 +472,7 @@ There, you will find a list of GitHub organizations that you're an Admin for. Ne
 
 The Citation File Format [1] enables research software developers to include citation metadata with their software in a way that is readable by both humans and machines. The idea for the format was first proposed back in 2017 during [WSSSPE5.1](https://wssspe.researchcomputing.org.uk/wssspe5-1/) and since then has seen a quick uptake across various relevant players in the research software space. Notably, GitHub now supports the format and will render a "How to cite this repo" widget if your repository includes a `CITATION.cff` file:
 
-![github citation widget](github-citation-widget.png)
+![github citation widget](images/github-citation-widget.png)
 
 Additionally, Zenodo will use metadata from a `CITATION.cff` file while ingesting a snapshot for archiving when used in combination with the GitHub-Zenodo integration.
 
@@ -502,7 +501,8 @@ While you can write a `CITATION.cff` file by hand with just a text editor and a 
 
 **Prerequisites**
 
-1. section above on Citation File Format
+1. Section above on Citation File Format
+1. Basic familiarity with Zenodo
 
 <!-- TODO git clone the repo we made earlier -->
 
@@ -528,7 +528,7 @@ zenodraft --version  # I'm on 0.12.0
 ```
 
 <!-- TODO explain concept / version -->
-![zenodo versions widget](zenodo-versions-widget.png)
+![zenodo versions widget](images/zenodo-versions-widget.png)
 
 <!-- TODO explain tokens, where to get them -->
 &#9733; In order to let zenodraft upload items to Zenodo Sandbox, you are required to identify yourself using a token. Get the token here https://sandbox.zenodo.org/account/settings/applications/. `zenodraft` will look for an environment variable by the name of `ZENODO_SANDBOX_ACCESS_TOKEN` whose value you should set to the value of your token, as follows:
@@ -567,7 +567,7 @@ zenodraft file add --sandbox $VERSION_ID thefile.txt
 ```
 
 <!-- TODO use zenodraft to add simple minimal metadata -->
-Currently the metadata for your draft deposition is probably looking a bit sparse. You could update the metadata by hand using Zenodo's graphical user interface, but doing this for every software release might get a bit tedious so let's automate that. To do so, you can use dedicated metadata files which you can store with the other files in you repository. Here is an example of a minimal metadata file for Zenodo:
+Currently the metadata for your draft deposition is probably looking a bit sparse. You could update the metadata by hand, using Zenodo's graphical user interface, but doing this for every software release might get a bit tedious so let's automate that. To do so, you can use dedicated metadata files which you can store with the other files in your repository. Here is an example of a minimal metadata file for Zenodo:
 
 ```json
 {
@@ -581,7 +581,7 @@ Currently the metadata for your draft deposition is probably looking a bit spars
 
 Zenodo metadata file are written in JSON. You can use [JSONLint](https://jsonlint.com) to make sure your JSON files are valid syntax.
 
-&#9733; Create an empty file named `.zenodo.minimal.json`. Add the metadata to the deposition using:
+&#9733; Create an empty file named `.zenodo.minimal.json`. Copy the snippet above into it, then use `zenodraft` to attach the metadata to your draft deposition:
 
 ```shell
 zenodraft metadata update --sandbox $VERSION_ID .zenodo.minimal.json
