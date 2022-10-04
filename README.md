@@ -106,8 +106,7 @@ This should return a `python` that is local to the `env` directory, most likely 
 1. Install `howfairis` from PyPI
 1. Run `howfairis` on a GitHub repository
 1. Explore the command line options
-1. Experiment with `howfairis` configuration file
-1. How to overrule a config file
+1. Experiment with `howfairis` configuration file on local and on remote
 
 The tool that we will be using in this part is called `howfairis`. It is a command line program that you can install from the Python Package Index (PyPI). PyPI is the Python community's platform where people publish their packages, so that others can use them. You can see the page for the `howfairis` package on PyPI here https://pypi.org/project/howfairis.
 
@@ -374,17 +373,13 @@ In this part, we'll use an second tool that is installable from PyPI. The tool i
 python3 -m pip install fairtally
 ```
 
-```shell
-# make urls.txt with two urls in it
-# run fairtally -i urls.txt
-# look at results.
-# more repos more problems,
-# create token for github (and / or gitlab)
-```
-
-<!-- TODO rework making the list of URLs -->
-<!-- TODO add instructions for getting tokens and why you need them-->
-<!-- TODO add a few sentences interpreting the fairtally results-->
+<!-- TODO fairtally make urls.txt with two urls in it -->
+<!-- TODO fairtally run fairtally -i urls.txt -->
+<!-- TODO fairtally look at results. -->
+<!-- TODO fairtally use snippet to make a list of many urls -->
+<!-- TODO fairtally add instructions for getting tokens and why you need them-->
+<!-- TODO fairtally create token for github (and / or gitlab) -->
+<!-- TODO fairtally run for realsies -->
 
 Example of how to get a list of repositories from an organization (doing it any other way is also fine! as long as you end up with something like the content of `urls.txt` below):
 
@@ -431,6 +426,8 @@ fairtally -i urls.txt
 &#9733; Once it finishes, open the generated `tally.html` file in your browser to inspect the results. It should look more or less like this:
 
 ![fairtally result](images/tally.html.png)
+
+<!-- TODO fairtally add a few sentences interpreting the fairtally results-->
 
 ## 5. Where to go from here
 
@@ -504,11 +501,11 @@ While you can write a `CITATION.cff` file by hand with just a text editor and a 
 1. Section above on Citation File Format
 1. Basic familiarity with Zenodo
 
-<!-- TODO git clone the repo we made earlier -->
+<!-- TODO zenodraft git clone the repo we made earlier -->
 
 Since we're only exploring at the moment, this tutorial uses the Zenodo Sandbox environment instead of regular Zenodo. The `zenodraft` commands work the same for either target platform, just make sure to leave out the `--sandbox` flag, and don't forget you need separate tokens for each platform.
 
-<!-- TODO add instructions for installing Node and npm via nvm and nvs, with link to nodejs.org 
+<!-- TODO zenodraft add instructions for installing Node and npm via nvm and nvs, with link to nodejs.org
 # Linux/Mac:
 https://github.com/nvm-sh/nvm section Install & Update script
 sudo apt install jq
@@ -527,17 +524,17 @@ npm --version        # I'm on 8.5.5
 zenodraft --version  # I'm on 0.12.0
 ```
 
-<!-- TODO explain concept / version -->
+<!-- TODO zenodraft explain concept / version -->
 ![zenodo versions widget](images/zenodo-versions-widget.png)
 
-<!-- TODO explain tokens, where to get them -->
+<!-- TODO zenodraft explain tokens, where to get them -->
 &#9733; In order to let zenodraft upload items to Zenodo Sandbox, you are required to identify yourself using a token. Get the token here https://sandbox.zenodo.org/account/settings/applications/. `zenodraft` will look for an environment variable by the name of `ZENODO_SANDBOX_ACCESS_TOKEN` whose value you should set to the value of your token, as follows:
 
 ```shell
 # add tokens to terminal
 export ZENODO_SANDBOX_ACCESS_TOKEN=<your-zenodo-sandbox-token>
 ```
-<!-- TODO use zenodraft to create a first version in a new concept on sandbox -->
+
 &#9733; Run the command below to create an empty draft deposition in a new collection on Zenodo Sandbox. If successful, it will print the identifier for the first version in the new collection:
 
 ```shell
@@ -552,7 +549,6 @@ VERSION_ID=1234567 # use your own number :)
 
 &#9733; Now point your browser to https://sandbox.zenodo.org and click "Upload" (button at the center top of the page; it may ask you to log in). After the jump, you should see a list of your depositions on Zenodo Sandbox. If everything worked, the top one is the one you just made. It should still be in unpublished/draft mode.
 
-<!-- TODO use zenodraft to add a file into the draft deposition -->
 &#9733; Create a new file on your local system. Just use some dummy file, but make sure it has some content otherwise Zenodo doesn't play nice.
 
 ```shell
@@ -566,7 +562,6 @@ echo 'some data' > thefile.txt
 zenodraft file add --sandbox $VERSION_ID thefile.txt
 ```
 
-<!-- TODO use zenodraft to add simple minimal metadata -->
 Currently the metadata for your draft deposition is probably looking a bit sparse. You could update the metadata by hand, using Zenodo's graphical user interface, but doing this for every software release might get a bit tedious so let's automate that. To do so, you can use dedicated metadata files which you can store with the other files in your repository. Here is an example of a minimal metadata file for Zenodo:
 
 ```json
@@ -596,8 +591,6 @@ zenodraft deposition publish --sandbox $VERSION_ID
 Note that once you finalize a deposition, you can no longer update the files in the deposition (but the metadata can still be updated afterwards). Instead of the command line, you can also finalize a deposition by navigating to the Zenodo Sandbox interface and clicking the button there. This latter way can be especially useful because it gives you the opportunity to inspect the deposition before publishing it.
 
 Afterwards, you should be able to see your published deposition on Zenodo Sandbox https://sandbox.zenodo.org/record/<your version id>.
-
-<!-- TODO then add the equivalent of CITATION.cff into it using cffconvert and jq -->
 
 While this is all great, the deposition's metadata does not currently include any of the citation information that we put in `CITATION.cff`. It would be really nice if we can use those data without having to keep two files in sync. Luckily, this is possible by using a tool named `cffconvert`, available from [PyPI](https://pypi.org/project/cffconvert).
 
@@ -655,8 +648,8 @@ cat .zenodo.minimal.json .zenodo.citation.json | jq -s add > .zenodo.json
 zenodraft metadata update --sandbox $VERSION_ID .zenodo.json
 ```
 
-<!-- TODO explain how to use jsonschema validator to create all the metadata -->
-<!-- TODO use jq to combine minimal, citation, extras metadata into one using jq -->
+<!-- TODO zenodraft explain how to use jsonschema validator to create all the metadata -->
+<!-- TODO zenodraft use jq to combine minimal, citation, extras metadata into one using jq -->
 
 Zenodo supports a lot of metadata, but its documentation is a bit sparse at the moment. The _unofficial_ JSONschema for Zenodo depositions is available here: https://github.com/zenodraft/metadata-schema-zenodo. You can use tools such as JSONlint (https://jsonlint.com) to make sure the file you're writing is valid JSON, and tools like JSONSchemaValidator (https://www.jsonschemavalidator.net/) to make sure the JSON follows the layout that Zenodo expects.
 
