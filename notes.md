@@ -7,16 +7,34 @@
 - TODO get colored sticky notes
 - explain connection readme and howfairis score side by side
 - test installation instructions on clean ubuntu
-- test installation instructions on clean fedora
 - test installation instructions on windows with git bash
-- test `which` command on windows git bash
-- installing jq on windows
-- after adding a cff, check you have the widget
-- validating a JSON file with JSONlint, with JSON schema validator .zenodo.extras.json
-- zenodo mention cant upload empty file
+- validating a JSON file JSON schema validator
 - zenodo mention cant upload file (deposition?) with the same hash, easy workaround is echoing datetime to the upload file
-- update tentative schedule
 - looks like there may be a bug with ignoring remote howfairis config files, im getting an assertionerror
+- TODO add installation instructions for node, npm
+
+on fedora>=35,
+  - `python3` installed by default
+  - `pip` can be installed with `sudo dnf install python3-pip`
+  - `venv` is installed
+  - `cffconvert` installable with `sudo dnf install cffconvert`
+  - `jq` installed by default
+  - `sudo dnf install nodejs`, includes `npm`
+  - `sudo npm install -g zenodraft`
+
+on ubuntu 22,
+  - `python3` installed by default
+  - `pip` can be installed with `sudo apt install python3-pip`
+  - `venv` can be installed with `sudo apt install python3-venv`
+  - jq can be installed with `sudo apt install jq`
+  - `cffconvert` installable from pypi
+  - `nodejs==12.22` installable with `sudo apt install nodejs`, looks like that works though
+  - `npm==8.5` installable with `sudo apt install npm`
+  - `curl` installable with `sudo apt install curl`
+
+on windows,
+  - test `which` command on windows git bash (alternative `where`)
+  - installing jq on windows
 
 json schema lint
 ```json
