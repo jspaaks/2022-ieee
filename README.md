@@ -504,6 +504,8 @@ While you can write a `CITATION.cff` file by hand with just a text editor and a 
 
 1. section above on Citation File Format
 
+<!-- TODO git clone the repo we made earlier -->
+
 Since we're only exploring at the moment, this tutorial uses the Zenodo Sandbox environment instead of regular Zenodo. The `zenodraft` commands work the same for either target platform, just make sure to leave out the `--sandbox` flag, and don't forget you need separate tokens for each platform.
 
 <!-- TODO add instructions for installing Node and npm via nvm and nvs, with link to nodejs.org 
@@ -536,11 +538,16 @@ zenodraft --version  # I'm on 0.12.0
 export ZENODO_SANDBOX_ACCESS_TOKEN=<your-zenodo-sandbox-token>
 ```
 <!-- TODO use zenodraft to create a first version in a new concept on sandbox -->
-&#9733; Run the command below to create an empty draft deposition in a new collection on Zenodo Sandbox. If successful, it will print the identifier for the first version in the new collection. The command below uses the `ENV_VARIABLE=$(command)` syntax to capture the printed version identifier.
+&#9733; Run the command below to create an empty draft deposition in a new collection on Zenodo Sandbox. If successful, it will print the identifier for the first version in the new collection:
 
 ```shell
-VERSION_ID=$(zenodraft deposition create concept --sandbox)
-echo $VERSION_ID  # will print a number
+zenodraft deposition create concept --sandbox
+```
+
+Now create a new environment variable named `VERSION_ID` and set it to the number that was printed:
+
+```shell
+VERSION_ID=1234567 # use your own number :)
 ```
 
 &#9733; Now point your browser to https://sandbox.zenodo.org and click "Upload" (button at the center top of the page; it may ask you to log in). After the jump, you should see a list of your depositions on Zenodo Sandbox. If everything worked, the top one is the one you just made. It should still be in unpublished/draft mode.
@@ -553,13 +560,14 @@ echo $VERSION_ID  # will print a number
 echo 'some data' > thefile.txt
 ```
 
-&#9733; Now upload the file to the newly created deposition
+&#9733; Now upload the file to the newly created deposition:
 
 ```shell
 zenodraft file add --sandbox $VERSION_ID thefile.txt
 ```
+
 <!-- TODO use zenodraft to add simple minimal metadata -->
-Currently the metadata for your draft deposition is probably looking a bit sparse. Now, you could update the metadata by hand using Zenodo's graphical user interface, but doing this for every software release might get a bit tedious, so let's automate that. To do so, you can use dedicated metadata files which you can store with the other files in you repo. Here is an example of a minimal metadata file:
+Currently the metadata for your draft deposition is probably looking a bit sparse. You could update the metadata by hand using Zenodo's graphical user interface, but doing this for every software release might get a bit tedious so let's automate that. To do so, you can use dedicated metadata files which you can store with the other files in you repository. Here is an example of a minimal metadata file for Zenodo:
 
 ```json
 {
@@ -576,7 +584,6 @@ Zenodo metadata file are written in JSON. You can use [JSONLint](https://jsonlin
 &#9733; Create an empty file named `.zenodo.minimal.json`. Add the metadata to the deposition using:
 
 ```shell
-# add the metadata using data from a metadata file
 zenodraft metadata update --sandbox $VERSION_ID .zenodo.minimal.json
 ```
 
@@ -592,9 +599,9 @@ Afterwards, you should be able to see your published deposition on Zenodo Sandbo
 
 <!-- TODO then add the equivalent of CITATION.cff into it using cffconvert and jq -->
 
-While this is all great, the deposition's metadata does not currently include any of the citation information that we put in `CITATION.cff`. It would be really nice if we can use those data without having to keep two files in sync. Luckily, this is possible by using a tool named `cffconvert`, available from PyPI.
+While this is all great, the deposition's metadata does not currently include any of the citation information that we put in `CITATION.cff`. It would be really nice if we can use those data without having to keep two files in sync. Luckily, this is possible by using a tool named `cffconvert`, available from [PyPI](https://pypi.org/project/cffconvert).
 
-&#9733; Install cffconvert from PyPI using:
+&#9733; Install `cffconvert` from PyPI using:
 
 ```shell
 # make sure your python virtual environment has been
@@ -604,7 +611,7 @@ python3 -m pip install cffconvert
 
 `cffconvert` can convert the data from your `CITATION.cff` into a variety of other formats.
 
-&#9733; Convert the citation metadata from your CITATION.cff to Zenodo metadata using:
+&#9733; Convert the citation metadata from your `CITATION.cff` to Zenodo metadata using:
 
 ```shell
 cffconvert -f zenodo -o .zenodo.citation.json
@@ -612,12 +619,14 @@ cffconvert -f zenodo -o .zenodo.citation.json
 
 This will generate a new file `.zenodo.citation.json` containing the Zenodo equivalent of your `CITATION.cff` data.
 
-Now we need to merge `.zenodo.minimal.json` with `.zenodo.citation.json` to get the required metadata file. For this we can use `jq`, a program with which you can wrangle JSON files. For example, given two JSON files `a.json` and `b.json`
+Now we need to merge `.zenodo.minimal.json` with `.zenodo.citation.json` to get the required metadata file. For this we can use `jq`, a program with which you can wrangle JSON files. For example, given two JSON files `a.json` and `b.json`:
+
 ```json
 {
   "a": 3
 }
 ```
+
 ```json
 {
   "b": "hello"
@@ -625,6 +634,7 @@ Now we need to merge `.zenodo.minimal.json` with `.zenodo.citation.json` to get 
 ```
 
 we can use `jq` as follows to combine them:
+
 ```shell
 cat a.json b.json | jq -s add
 ```
