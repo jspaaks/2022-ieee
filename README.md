@@ -433,7 +433,7 @@ https://github.com/citation-file-format/github2cff
 https://github.com/citation-file-format/soccs
 ```
 
-&#9733; Make sure you have your GitHub API Personal Access Token as environment variables in your terminal, then run `fairtally` with the URL list:
+&#9733; Make sure you have your Personal Access Token available as an environment variable in your terminal, then run `fairtally` with the URL list:
 
 ```
 fairtally -i urls.txt
