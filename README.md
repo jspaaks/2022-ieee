@@ -514,37 +514,15 @@ While you can write a `CITATION.cff` file by hand with just a text editor and a 
 1. Section above on Citation File Format
 1. Basic familiarity with Zenodo
 
-<!-- TODO zenodraft git clone the repo we made earlier -->
+In this section, you'll use a command line tool called `zenodraft` which is available from `https://npmjs.com` to upload a file from your local machine to the archiving website [Zenodo](https://zenodo.org). Since we're only exploring at the moment, this tutorial uses the Zenodo Sandbox environment instead of regular Zenodo. The `zenodraft` commands work the same for either target platform, just make sure to leave out the `--sandbox` flag.
 
-Since we're only exploring at the moment, this tutorial uses the Zenodo Sandbox environment instead of regular Zenodo. The `zenodraft` commands work the same for either target platform, just make sure to leave out the `--sandbox` flag, and don't forget you need separate tokens for each platform.
+<!-- TODO zenodraft add instructions for installing Node and npm via nvm and nvs, with link to nodejs.org -->
 
-<!-- TODO zenodraft add instructions for installing Node and npm via nvm and nvs, with link to nodejs.org
-# Linux/Mac:
-https://github.com/nvm-sh/nvm section Install & Update script
-sudo apt install jq
-python3 -m pip install cffconvert
-# Windows:
-choco install nvs
-choco install jq
-python3 -m pip install cffconvert
--->
-&#9733; Before we get started, make sure you have the required programs:
+&#9733; In order to let `zenodraft` upload items to Zenodo Sandbox, you are required to identify yourself using a Personal Access Token. To get the token, go to https://sandbox.zenodo.org/account/settings/applications/ and click "new token". For "Name", fill in something like "Token for zenodraft". Mark the `deposit:actions` and `deposit:upload` scopes as checked, then click "Create". Zenodo will show you the value of the token, make sure you copy it now, you won't be able to see it again later.
+
+&#9733; When uploading a file to Zenodo, `zenodraft` will look for an environment variable by the name of `ZENODO_SANDBOX_ACCESS_TOKEN` that should contain the token. Set the environment variable, as follows:
 
 ```shell
-# assert you have node and npm and zenodraft (after prerequisite sections)
-node --version       # I'm on v16.15.0
-npm --version        # I'm on 8.5.5
-zenodraft --version  # I'm on 0.12.0
-```
-
-<!-- TODO zenodraft explain concept / version -->
-![zenodo versions widget](images/zenodo-versions-widget.png)
-
-<!-- TODO zenodraft explain tokens, where to get them -->
-&#9733; In order to let zenodraft upload items to Zenodo Sandbox, you are required to identify yourself using a token. Get the token here https://sandbox.zenodo.org/account/settings/applications/. `zenodraft` will look for an environment variable by the name of `ZENODO_SANDBOX_ACCESS_TOKEN` whose value you should set to the value of your token, as follows:
-
-```shell
-# add tokens to terminal
 export ZENODO_SANDBOX_ACCESS_TOKEN=<your-zenodo-sandbox-token>
 ```
 
@@ -554,20 +532,24 @@ export ZENODO_SANDBOX_ACCESS_TOKEN=<your-zenodo-sandbox-token>
 zenodraft deposition create concept --sandbox
 ```
 
-Now create a new environment variable named `VERSION_ID` and set it to the number that was printed:
+<!-- TODO zenodraft explain concept / version -->
+
+&#9733; Create a new environment variable named `VERSION_ID` and set it to the number that was printed:
 
 ```shell
 VERSION_ID=1234567 # use your own number :)
 ```
 
-&#9733; Now point your browser to https://sandbox.zenodo.org and click "Upload" (button at the center top of the page; it may ask you to log in). After the jump, you should see a list of your depositions on Zenodo Sandbox. If everything worked, the top one is the one you just made. It should still be in unpublished/draft mode.
+&#9733; Point your browser to https://sandbox.zenodo.org and click "Upload" (button at the center top of the page; it may ask you to log in). After the jump, you should see a list of your depositions on Zenodo Sandbox. If everything worked, the top one is the one you just made. It should still be in unpublished/draft mode.
 
-&#9733; Create a new file on your local system. Just use some dummy file, but make sure it has some content otherwise Zenodo doesn't play nice.
+&#9733; On your local machine, create a new directory that will contain the files for this part. Create a new file. Just use some dummy file, but make sure it has some content otherwise Zenodo doesn't play nice.
 
 ```shell
 # make some fake data
-echo 'some data' > thefile.txt
+echo `date` > thefile.txt
 ```
+
+Sidenote: the command above generates a file with different contents each time. This helps avoid problems with trying to upload a deposition whose files have the same hash as an existing deposition (Zenodo does not allow such duplication).
 
 &#9733; Now upload the file to the newly created deposition:
 
@@ -580,16 +562,16 @@ Currently the metadata for your draft deposition is probably looking a bit spars
 ```json
 {
   "access_right": "open",
-  "upload_type": "other",
+  "upload_type": "software",
   "title": "The title",
   "license": "Apache-2.0",
   "description": "The description"
 }
 ```
 
-Zenodo metadata file are written in JSON. You can use [JSONLint](https://jsonlint.com) to make sure your JSON files are valid syntax.
+Zenodo metadata files are written in JSON. You can use [JSONLint](https://jsonlint.com) to make sure your JSON files are valid syntax.
 
-&#9733; Create an empty file named `.zenodo.minimal.json`. Copy the snippet above into it, then use `zenodraft` to attach the metadata to your draft deposition:
+&#9733; Create an empty file in your working directory named `.zenodo.minimal.json`. Copy the snippet above into it, then use `zenodraft` to attach the metadata to your draft deposition:
 
 ```shell
 zenodraft metadata update --sandbox $VERSION_ID .zenodo.minimal.json
@@ -605,17 +587,29 @@ Note that once you finalize a deposition, you can no longer update the files in 
 
 Afterwards, you should be able to see your published deposition on Zenodo Sandbox https://sandbox.zenodo.org/record/<your version id>.
 
-While this is all great, the deposition's metadata does not currently include any of the citation information that we put in `CITATION.cff`. It would be really nice if we can use those data without having to keep two files in sync. Luckily, this is possible by using a tool named `cffconvert`, available from [PyPI](https://pypi.org/project/cffconvert).
+While this is all great, the deposition's metadata does not currently include any of the citation information that we put in `CITATION.cff` (see previous section). It would be really nice if we can use those data without having to keep two files in sync. Luckily, this is possible by using a tool named `cffconvert`, available from [PyPI](https://pypi.org/project/cffconvert).
 
-&#9733; Install `cffconvert` from PyPI using:
+&#9733; Copy the `CITATION.cff` file (see previous section) into your working directory so it is next to `thefile.txt` and `.zenodo.minimal.json`.
+
+&#9733; Verify your Python virtual environment is active, then install `cffconvert` from PyPI using:
 
 ```shell
-# make sure your python virtual environment has been
-# activated for this terminal
 python3 -m pip install cffconvert
 ```
 
-`cffconvert` can convert the data from your `CITATION.cff` into a variety of other formats.
+`cffconvert` can validate `CITATION.cff` files, and can convert the data from your `CITATION.cff` into a variety of other formats.
+
+&#9733; Make sure the `CITATION.cff` file is valid by using:
+
+```shell
+cffconvert --validate
+```
+
+You should see a message like:
+
+```text
+Citation metadata are valid according to schema version 1.2.0.
+```
 
 &#9733; Convert the citation metadata from your `CITATION.cff` to Zenodo metadata using:
 
@@ -625,7 +619,7 @@ cffconvert -f zenodo -o .zenodo.citation.json
 
 This will generate a new file `.zenodo.citation.json` containing the Zenodo equivalent of your `CITATION.cff` data.
 
-Now we need to merge `.zenodo.minimal.json` with `.zenodo.citation.json` to get the required metadata file. For this we can use `jq`, a program with which you can wrangle JSON files. For example, given two JSON files `a.json` and `b.json`:
+Now we need to merge `.zenodo.minimal.json` with `.zenodo.citation.json` to get the required metadata file. For this we can use `jq`, a program that helps you wrangle JSON files. For example, given two JSON files `a.json` and `b.json`:
 
 ```json
 {
@@ -661,12 +655,15 @@ cat .zenodo.minimal.json .zenodo.citation.json | jq -s add > .zenodo.json
 zenodraft metadata update --sandbox $VERSION_ID .zenodo.json
 ```
 
-<!-- TODO zenodraft explain how to use jsonschema validator to create all the metadata -->
-<!-- TODO zenodraft use jq to combine minimal, citation, extras metadata into one using jq -->
+&#9733; Inspect the record on Zenodo Sandbox and verify that the metadata was updated to reflect the data from `CITATION.cff`.
 
-Zenodo supports a lot of metadata, but its documentation is a bit sparse at the moment. The _unofficial_ JSONschema for Zenodo depositions is available here: https://github.com/zenodraft/metadata-schema-zenodo. You can use tools such as JSONlint (https://jsonlint.com) to make sure the file you're writing is valid JSON, and tools like JSONSchemaValidator (https://www.jsonschemavalidator.net/) to make sure the JSON follows the layout that Zenodo expects.
+Zenodo supports a lot of metadata, but its documentation is a bit sparse at the moment. The _unofficial_ JSONschema for Zenodo deposition metadata is maintained here: https://github.com/zenodraft/metadata-schema-zenodo. You can use tools like JSONSchemaValidator (https://www.jsonschemavalidator.net/) to make sure the JSON follows the layout that Zenodo expects.
 
-&#9733; For a glimpse of what is possible, have a look at https://sandbox.zenodo.org/record/1049232, a dummy deposition where we tried to use all the supported properties.
+Online JSON schema validators usually have two text areas: the one on the left should contain the JSONschema that you want to test against. This can either be the JSONschema document itself, or a reference to such a document (`$ref` in JSONschema parlance). The text area on the right can then be used to write a JSON document that follows the schema. The image below shows what that looks like when using the published Zenodo metadata schema from https://zenodraft.github.io/metadata-schema-zenodo/0.2.0/schema.json (left side) to validate a simple Zenodo metadata file (right side).
+
+![json schema validator](images/jsonschema-validator.png)
+
+&#9733; For a glimpse of what is possible, have a look at https://sandbox.zenodo.org/record/1049232, a dummy deposition where we tried to use all the supported properties. The `.zenodo.json` that was used to create that record is here: https://github.com/zenodraft/metadata-schema-zenodo/blob/0.2.0/README.md.
 
 ## Extras: Checklist for FAIR research software
 
@@ -674,7 +671,7 @@ Zenodo supports a lot of metadata, but its documentation is a bit sparse at the 
 
 1. Explore the interactive self-assessment FAIR checklist
 
-The checklist we will use in this section is the result of a collaboration between Australian Research Data Council and Netherlands eScience Center. The questions in the checklist are based on discussions from the [FAIR4RS](https://www.rd-alliance.org/groups/fair-research-software-fair4rs-wg) initiative. Although the checklist is already in a usable state, be aware that it is still a work in progress. In particular, the checklist is hosted at GitHub pages at the moment. Because GitHub Pages URLs are a bit unwieldy, it's likely that the URL will change. Be aware that this may break hyperlinks, which may mean that you have to redo any previous self assessments (which isn't a lot of work if you have no more than a handful of projects, but still).
+The checklist we will use in this section is the result of a collaboration between Australian Research Data Council and Netherlands eScience Center. The questions in the checklist are based on discussions from the [FAIR4RS](https://www.rd-alliance.org/groups/fair-research-software-fair4rs-wg) initiative [1]. Although the checklist is already in a usable state, be aware that it is still a work in progress. In particular, the checklist is hosted at GitHub pages at the moment. Because GitHub Pages URLs are a bit unwieldy, it's likely that the URL will change. Be aware that this may break hyperlinks, which may mean that you have to redo any previous self assessments (which isn't a lot of work if you have no more than a handful of projects, but still).
 
 The checklist is designed to be interactive, and yields a "FAIRness" badge that developers can put in their project's README file:
 
@@ -689,6 +686,10 @@ The snippet above renders like this:
 The advantage of this approach is that when visitors come to the project's README, they can restore the FAIRness self assessment state by clicking on the badge. This helps both with transparency and with metrics collection, while nudging researchers toward FAIRer practices.
 
 &#9733; Go to https://ardc-fair-checklist.github.io/ardc-fair-checklist and see for yourself!
+
+### References
+
+1. Chue Hong, Neil P., Katz, Daniel S., Barker, Michelle, Lamprecht, Anna-Lena, Martinez, Carlos, Psomopoulos, Fotis E., Harrow, Jen, Castro, Leyla Jael, Gruenpeter, Morane, Martinez, Paula Andrea, Honeyman, Tom, Struck, Alexander, Lee, Allen, Loewe, Axel, van Werkhoven, Ben, Jones, Catherine, Garijo, Daniel, Plomp, Esther, Genova, Francoise, … RDA FAIR4RS WG. (2022). _FAIR Principles for Research Software (FAIR4RS Principles)_ (1.0). https://doi.org/10.15497/RDA00068
 
 ## Extras: Research Software Registries
 
