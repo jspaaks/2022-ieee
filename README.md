@@ -393,7 +393,7 @@ The report shows a list of repositories, along with a breakdown of the complianc
 
 Before we can run `fairtally` on a longer list of URLs, we need to make sure that the GitHub API will not start denying the requests that `howfairis` is making on our behalf (such denials are known as ["429 Too Many Requests"](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) errors). To avoid 429 errors, it helps if you identify yourself when you're making a request to the GitHub API. You can do so by using a so-called Personal Access Token.
 
-&#9733; Go to https://github.com/settings/tokens and click "Generate new token". For "note", fill in something that describes your usage of the token, something like "Querying the GitHub API". Choose whichever expiration duration works for you. You don't need to select any scope, since our token will not any special permissions, it will just read public data. Scroll down and click generate token. Make sure to copy the token now, GitHub will show its value only once.
+&#9733; Go to https://github.com/settings/tokens and click "Generate new token". For "note", fill in something that describes your usage of the token, something like "Querying the GitHub API". Choose whichever expiration duration works for you. You don't need to select any scope, since our token will not any need special permissions, it will just read public data. Scroll down and click "generate token". Make sure to copy the token now, GitHub will show its value only once.
 
 &#9733; In your terminal, make a new environment variable `APIKEY_GITHUB` and make sure to `export` its value, as follows:
 
@@ -401,7 +401,7 @@ Before we can run `fairtally` on a longer list of URLs, we need to make sure tha
 export APIKEY_GITHUB=<your github username>:<the token value>
 ```
 
-&#9733; Great! Now let's try running `fairtally` on longer list of URLs. You can make your own, or use the code snippet below, or use the list below:
+&#9733; Great! Now let's try running `fairtally` on a longer list of URLs. You can make your own, or use the code snippet below, or use the list below:
 
 ```shell
 # More information on GitHub API here:
@@ -433,7 +433,7 @@ https://github.com/citation-file-format/github2cff
 https://github.com/citation-file-format/soccs
 ```
 
-&#9733; Make sure you have your GitHub/GitLab API access tokens as environment variables in your terminal, then run `fairtally` with the URL list:
+&#9733; Make sure you have your GitHub API Personal Access Token as environment variables in your terminal, then run `fairtally` with the URL list:
 
 ```
 fairtally -i urls.txt
