@@ -524,7 +524,34 @@ In this section, you'll use a command line tool called `zenodraft` which is avai
 choco install nvs
 ```
 
-If you're on Linux or Mac, follow the instructions from https://github.com/nvm-sh/nvm#installing-and-updating to install Node Version Manager [`nvm`](https://github.com/nvm-sh/nvm).
+<!-- TODO zenodraft complete nvs instructions -->
+
+If you're on Linux or Mac, follow the instructions from https://github.com/nvm-sh/nvm#installing-and-updating to install Node Version Manager [`nvm`](https://github.com/nvm-sh/nvm), then use `nvm` as follows:
+
+```shell
+# Linux / Mac only
+
+# download the install script and run it
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+# (restart terminal)
+
+# check if it worked
+nvm --version  # mine says 0.39.1
+
+# install latest long term support version of node
+nvm install node --lts
+
+# check if it worked
+node --version # mine says v18.10.0
+npm --version  # mine says 8.19.2
+```
+
+&#9733; Install `zenodraft` from https://npmjs.com using Node Package Manager:
+```shell
+npm install zenodraft
+```
+<!-- TODO zenodraft autocomplete -->
 
 &#9733; In order to let `zenodraft` upload items to Zenodo Sandbox, you are required to identify yourself using a Personal Access Token. To get the token, go to https://sandbox.zenodo.org/account/settings/applications/ and click "new token". For "Name", fill in something like "Token for zenodraft". Mark the `deposit:actions` and `deposit:upload` scopes as checked, then click "Create". Zenodo will show you the value of the token, make sure you copy it now, you won't be able to see it again later.
 
