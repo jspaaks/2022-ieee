@@ -373,29 +373,45 @@ In this part, we'll use an second tool that is installable from PyPI. The tool i
 python3 -m pip install fairtally
 ```
 
-<!-- TODO fairtally make urls.txt with two urls in it -->
-<!-- TODO fairtally run fairtally -i urls.txt -->
-<!-- TODO fairtally look at results. -->
-<!-- TODO fairtally use snippet to make a list of many urls -->
-<!-- TODO fairtally add instructions for getting tokens and why you need them-->
-<!-- TODO fairtally create token for github (and / or gitlab) -->
-<!-- TODO fairtally run for realsies -->
+Next we need to make a list of repository URLs.
 
-Example of how to get a list of repositories from an organization (doing it any other way is also fine! as long as you end up with something like the content of `urls.txt` below):
+&#9733; Use your favorite plain text editor to make a new file `urls.txt`. This file will contain the list of repositories, but for now just copy paste your repo URL into it.
+
+&#9733; Run fairtally on the list:
 
 ```shell
+fairtally -i urls.txt
+```
+
+If successful, it should check the repository and print a message about where to find the results.
+
+&#9733; Open the results file `tally.html` in your browser. It should look like the image below:
+
+![fairtally result one repository](images/fairtally-result-one-repo.png)
+
+The report shows a list of repositories, along with a breakdown of the compliance and the resulting badge. The rows can be sorted for convenience, although that's not useful yet since we have just one repository. Also, the search bar near the top right of the page lets you filter the list of repositories by (part of) the URL.
+
+Before we can run `fairtally` on a longer list of URLs, we need to make sure that the GitHub API will not start denying the requests that `howfairis` is making on our behalf (such denials are known as ["429 Too Many Requests"](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) errors). To avoid 429 errors, it helps if you identify yourself when you're making a request to the GitHub API. You can do so by using a so-called Personal Access Token.
+
+&#9733; Go to https://github.com/settings/tokens and click "Generate new token". For "note", fill in something that describes your usage of the token, something like "Querying the GitHub API". Choose whichever expiration duration works for you. You don't need to select any scope, since our token will not any special permissions, it will just read public data. Scroll down and click generate token. Make sure to copy the token now, GitHub will show its value only once.
+
+&#9733; In your terminal, make a new environment variable `APIKEY_GITHUB` and make sure to `export` its value, as follows:
+
+```shell
+export APIKEY_GITHUB=<your github username>:<the token value>
+```
+
+&#9733; Great! Now let's try running `fairtally` on longer list of URLs. You can make your own, or use the code snippet below, or use the list below:
+
+```shell
+# More information on GitHub API here:
+# https://docs.github.com/en/rest/repos/repos#list-organization-repositories
+
 YOUR_ORG=citation-file-format
+
 curl -s -H "Accept: application/vnd.github+json" \
 "https://api.github.com/orgs/${YOUR_ORG}/repos?per_page=100&page=0&sort=pushed" | \
 jq -r '.[] .html_url' > urls.txt
-```
-
-(More information on GitHub API here: https://docs.github.com/en/rest/repos/repos#list-organization-repositories)
-
-For the `citation-file-format` organization, that results in
-
-```shell
-cat urls.txt
 ```
 ```shell
 https://github.com/citation-file-format/citation-file-format
@@ -426,8 +442,6 @@ fairtally -i urls.txt
 &#9733; Once it finishes, open the generated `tally.html` file in your browser to inspect the results. It should look more or less like this:
 
 ![fairtally result](images/tally.html.png)
-
-<!-- TODO fairtally add a few sentences interpreting the fairtally results-->
 
 ## 5. Where to go from here
 
