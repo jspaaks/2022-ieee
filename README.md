@@ -517,7 +517,14 @@ While you can write a `CITATION.cff` file by hand with just a text editor and a 
 
 In this section, you'll use a command line tool called `zenodraft` which is available from `https://npmjs.com` to upload a file from your local machine to the archiving website [Zenodo](https://zenodo.org). Since we're only exploring at the moment, this tutorial uses the Zenodo Sandbox environment instead of regular Zenodo. The `zenodraft` commands work the same for either target platform, just make sure to leave out the `--sandbox` flag.
 
-<!-- TODO zenodraft add instructions for installing Node and npm via nvm and nvs, with link to nodejs.org -->
+&#9733; First let's make sure you have the required software: You'll need Nodejs and Node Package Manager (`npm`). If you're on Windows, we recommend using `choco` to install Node Version Switcher [`nvs`](https://github.com/jasongin/nvs):
+
+```
+# Windows-only
+choco install nvs
+```
+
+If you're on Linux or Mac, follow the instructions from https://github.com/nvm-sh/nvm#installing-and-updating to install Node Version Manager [`nvm`](https://github.com/nvm-sh/nvm).
 
 &#9733; In order to let `zenodraft` upload items to Zenodo Sandbox, you are required to identify yourself using a Personal Access Token. To get the token, go to https://sandbox.zenodo.org/account/settings/applications/ and click "new token". For "Name", fill in something like "Token for zenodraft". Mark the `deposit:actions` and `deposit:upload` scopes as checked, then click "Create". Zenodo will show you the value of the token, make sure you copy it now, you won't be able to see it again later.
 
