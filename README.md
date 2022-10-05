@@ -586,7 +586,7 @@ zenodraft deposition publish --sandbox $VERSION_ID
 
 Note that once you finalize a deposition, you can no longer update the files in the deposition (but the metadata can still be updated afterwards). Instead of the command line, you can also finalize a deposition by navigating to the Zenodo Sandbox interface and clicking the button there. This latter way can be especially useful because it gives you the opportunity to inspect the deposition before publishing it.
 
-Afterwards, you should be able to see your published deposition on Zenodo Sandbox https://sandbox.zenodo.org/record/&lt;your version id&gt;.
+Afterwards, you should be able to see your published deposition on Zenodo Sandbox [https://sandbox.zenodo.org/record/&lt;your version id&gt;](https://sandbox.zenodo.org/record/%3Cyour%20version%20id%3E).
 
 While this is all great, the deposition's metadata does not currently include any of the citation information that we put in `CITATION.cff` (see previous section). It would be really nice if we can use those data without having to keep two files in sync. Luckily, this is possible by using a tool named `cffconvert`, available from [PyPI](https://pypi.org/project/cffconvert).
 
