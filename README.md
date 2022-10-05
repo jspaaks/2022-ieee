@@ -503,11 +503,12 @@ While you can write a `CITATION.cff` file by hand with just a text editor and a 
 
 **This section in brief**
 
-1. download and install Node and NPM
-1. download and install `zenodraft` from https://npmjs.com
-1. get access tokens for Zenodo Sandbox
-1. use `zenodraft` to publish a local file to Zenodo Sandbox
-1. use `zenodraft` to attach metadata to the new deposition on Zenodo Sandbox
+1. Download and install Node and NPM
+1. Download and install `zenodraft` from https://npmjs.com
+1. Get access tokens for Zenodo Sandbox
+1. Use `zenodraft` to publish a local file to Zenodo Sandbox
+1. Use `zenodraft` to attach metadata to the new deposition on Zenodo Sandbox
+1. Use `cffconvert` and `jq` to include citation data from `CITATION.cff` in the deposition's metadata
 
 **Prerequisites**
 
@@ -585,7 +586,7 @@ zenodraft deposition publish --sandbox $VERSION_ID
 
 Note that once you finalize a deposition, you can no longer update the files in the deposition (but the metadata can still be updated afterwards). Instead of the command line, you can also finalize a deposition by navigating to the Zenodo Sandbox interface and clicking the button there. This latter way can be especially useful because it gives you the opportunity to inspect the deposition before publishing it.
 
-Afterwards, you should be able to see your published deposition on Zenodo Sandbox https://sandbox.zenodo.org/record/<your version id>.
+Afterwards, you should be able to see your published deposition on Zenodo Sandbox https://sandbox.zenodo.org/record/&lt;your version id&gt;.
 
 While this is all great, the deposition's metadata does not currently include any of the citation information that we put in `CITATION.cff` (see previous section). It would be really nice if we can use those data without having to keep two files in sync. Luckily, this is possible by using a tool named `cffconvert`, available from [PyPI](https://pypi.org/project/cffconvert).
 
