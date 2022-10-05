@@ -453,8 +453,7 @@ For convenience, use the list below to navigate to each section:
 
 - [GitHub-Zenodo integration](#extras-github-zenodo-integration)
 - [Creating a CITATION.cff file](#extras-creating-a-citationcff-file)
-- [Creating depositions on Zenodo with zenodraft CLI](#extras-creating-depositions-on-zenodo-with-zenodraft-cli)
-- [Workflow to publish to Zenodo with maximum metadata](#extras-workflow-to-publish-on-zenodo-with-maximum-metadata)
+- [Creating depositions on Zenodo with `zenodraft` CLI](#extras-creating-depositions-on-zenodo-with-zenodraft-cli)
 - [Checklist for FAIR research software](#extras-checklist-for-fair-research-software)
 - [Research Software Registries](#extras-research-software-registries)
 
