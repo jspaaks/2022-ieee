@@ -533,7 +533,9 @@ export ZENODO_SANDBOX_ACCESS_TOKEN=<your-zenodo-sandbox-token>
 zenodraft deposition create concept --sandbox
 ```
 
-<!-- TODO zenodraft explain concept / version -->
+As a reminder, items on Zenodo are versioned; the collection of all versions of an item is known as a `concept`. Zenodo assigns separate DOIs and record identifiers to each `version` as well as to each `concept`:
+
+![zenodo versions widget](images/zenodo-versions-widget.png)
 
 &#9733; Create a new environment variable named `VERSION_ID` and set it to the number that was printed:
 
