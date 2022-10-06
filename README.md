@@ -29,7 +29,7 @@
 
 **Note for Windows users only**
 
-This tutorial makes extensive use of the command line. If you're on Windows, you should be able to work through all the materials using the Windows Command Prompt. If you're familiar with the Windows Subsystem for Linux (WSL) that should also work. Additionally, some tools we'll be using in this tutorial are installable via the third-party package manager for Windows named [Chocolatey](https://chocolatey.org/) or `choco` for short. You can install `choco` following the instructions from https://community.chocolatey.org/courses/installation/installing#cmd. The dropdown list at the top of that page also offers alternative ways of installing `choco`.
+This tutorial makes extensive use of the command line. If you're on Windows, you should be able to work through all the materials using the Windows Command Prompt. If you're familiar with Windows Subsystem for Linux (WSL) that should also work. Additionally, some tools we'll be using in this tutorial are installable via the third-party package manager for Windows named [Chocolatey](https://chocolatey.org/) or `choco` for short. You can install `choco` following the instructions from https://community.chocolatey.org/courses/installation/installing#cmd. The dropdown list at the top of that page also offers alternative ways of installing `choco`.
 
 **Action required (&#9733;)**
 
@@ -53,10 +53,11 @@ But make sure that the version number you're getting is 3.7 or higher. If you do
 Throughout the remainder of this document, we'll stick to only using `python3` as the command to start Python -- for Windows users, remember to replace `python3` with just `python`. Alternatively, you could make an alias using
 
 ```shell
+# Windows
 doskey python3=python $*
 ```
 
-&#9733; Next, we need `pip` as well. Check if you have `pip` by:
+&#9733; Next, we need `pip` as well. `pip` is a package manager for Python packages, we'll use it to download the packages we need, as well as their dependencies. Check if you have `pip` by:
 
 ```shell
 python3 -m pip --version
@@ -160,7 +161,7 @@ Updating your `PATH` can be done as follows:
 PATH=$PWD/env/bin:$PATH
 
 # Windows
-set PATH=C:\Users\youruser\somedir\env\Scripts;%PATH%
+set PATH=%CD%\env\Scripts;%PATH%
 ```
 
 Using `howfairis` with absolute paths can be done like this:
@@ -173,7 +174,7 @@ Using `howfairis` with absolute paths can be done like this:
 .\env\Scripts\howfairis --version
 ```
 
-&#9733; Next, create a new repository on GitHub for the experiments we'll be doing in this tutorial. Make sure to check the "Add a README file" checkbox when asked, and verify that the repository visibility is set to "Public", otherwise the tooling won't be able to see you repository.
+&#9733; Next, create a new repository on GitHub for the experiments we'll be doing in this tutorial. Make sure to check the "Add a README file" checkbox when asked, and verify that the repository visibility is set to "Public", otherwise the tooling won't be able to see your repository.
 
 Our README is written in MarkDown, but note that `howfairis` also supports `README`s written in ReStructured Text. Besides repositories on GitHub, `howfairis` supports GitLab repositories as well, albeit with some limitations: at the moment, `howfairis` can only handle repositories on gitlab.com (i.e. not on self-hosted instances), and only repositories that do not use GitLab's subgroup feature.
 
@@ -580,6 +581,7 @@ npm install zenodraft
 If you're on Windows, follow that up with defining an alias for `zenodraft`, as follows:
 
 ```shell
+# Windows
 doskey zenodraft=%CD%\node_modules\.bin\zenodraft $*
 ```
 
@@ -710,7 +712,7 @@ cffconvert -f zenodo -o .zenodo.citation.json
 
 This will generate a new file `.zenodo.citation.json` containing the Zenodo equivalent of your `CITATION.cff` data.
 
-Now we need to merge `.zenodo.minimal.json` with `.zenodo.citation.json` to get the required metadata file. For this we can use `jq`, a program that helps you wrangle JSON files. If you're on windows, install jq in a new terminal with Administrative privileges: `choco install jq -y`. On Linux/Mac install jq from your package manager, e.g `sudo apt install jq`
+Now we need to merge `.zenodo.minimal.json` with `.zenodo.citation.json` to get the required metadata file. For this we can use `jq`, a program that helps you wrangle JSON files. If you're on windows, install jq in a new terminal with Administrative privileges: `choco install jq -y`. On Linux/Mac, install `jq` from your package manager, e.g. `sudo apt install jq`.
 
 Given two JSON files `a.json` and `b.json`:
 
