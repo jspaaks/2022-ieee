@@ -29,7 +29,7 @@
 
 **Note for Windows users only**
 
-This tutorial makes extensive use of the command line. If you're on Windows, we recommend you install "Git Bash" from the "Git for Windows" package. You can download it from here: https://gitforwindows.org/. Git Bash will allow you to run terminal emulator commands just like you would on Linux/Mac systems. Additionally, all the tools we'll be using in this tutorial are installable via the third-party package manager for Windows named [Chocolatey](https://chocolatey.org/) or `choco` for short. You can install `choco` following the instructions from https://community.chocolatey.org/courses/installation/installing?method=installing-chocolatey#cmd. The dropdown list at the top of that page also offers alternative ways of installing `choco`.
+This tutorial makes extensive use of the command line. If you're on Windows, you should be able to work through all the materials using the Windows Command Prompt. If you're familiar with the Windows Subsystem for Linux (WSL) that should also work. Additionally, some tools we'll be using in this tutorial are installable via the third-party package manager for Windows named [Chocolatey](https://chocolatey.org/) or `choco` for short. You can install `choco` following the instructions from https://community.chocolatey.org/courses/installation/installing#cmd. The dropdown list at the top of that page also offers alternative ways of installing `choco`.
 
 **Action required (&#9733;)**
 
@@ -40,10 +40,21 @@ Throughout this tutorial, you'll encounter the &#9733; symbol; this indicates th
 &#9733; Before we begin, we have to make sure that we have the necessary tools installed. Depending on how your specific system has been set up, run
 
 ```shell
+# Linux / Mac
 python3 --version
 ```
+```shell
+# Windows
+python --version
+```
 
-Make sure that the version number you're getting is 3.7 or higher. If you don't have Python yet, install from your operating system's repositories (Mac/Linux), using `choco` (Windows), or download and install Python from https://www.python.org/downloads/.
+But make sure that the version number you're getting is 3.7 or higher. If you don't have Python yet, install from your operating system's repositories (Mac/Linux), using the Microsoft Store or `choco install python -y` (Windows), or download and install Python from https://www.python.org/downloads/.
+
+Throughout the remainder of this document, we'll stick to only using `python3` as the command to start Python -- for Windows users, remember to replace `python3` with just `python`. Alternatively, you could make an alias using
+
+```shell
+doskey python3=python $*
+```
 
 &#9733; Next, we need `pip` as well. Check if you have `pip` by:
 
@@ -88,16 +99,24 @@ python3 -m venv env
 &#9733; The previous command should have created a new directory by the name `env` (or whatever you entered as the argument to `venv`). We just have to activate it, as follows:
 
 ```shell
+# Linux/Mac + Bash
 source ./env/bin/activate
+
+# Windows Command Prompt
+env\Scripts\activate.bat
 ```
 
 Depending on your system setup, the command line prompt will reflect that we are now using the virtual environment. You can also tell by asking the system about the `python3` it knows about, like so:
 
 ```shell
+# Bash
 which python3
+
+# Windows Command Prompt
+where python
 ```
 
-This should return a `python` that is local to the `env` directory, most likely `./env/bin/python`.
+This should return a `python` that is local to the `env` directory, most likely `./env/bin/python` (Linux/Mac) or `.\env\Scripts\python.exe` (Windows).
 
 ## 2. howfairis
 
@@ -135,14 +154,23 @@ If you didn't get any error messages during the `pip install` step, but can't ac
 Updating your `PATH` can be done as follows:
 
 ```shell
-# prepend the $PATH with the absolute path to the env's bin directory
+# prepend the PATH variable with the absolute path to the env's bin directory
+
+# Linux / Mac
 PATH=$PWD/env/bin:$PATH
+
+# Windows
+set PATH=C:\Users\youruser\somedir\env\Scripts;%PATH%
 ```
 
 Using `howfairis` with absolute paths can be done like this:
 
 ```shell
+# Linux / Mac
 ./env/bin/howfairis --version
+
+# Windows
+.\env\Scripts\howfairis --version
 ```
 
 &#9733; Next, create a new repository on GitHub for the experiments we'll be doing in this tutorial. Make sure to check the "Add a README file" checkbox when asked, and verify that the repository visibility is set to "Public", otherwise the tooling won't be able to see you repository.
@@ -398,12 +426,18 @@ Before we can run `fairtally` on a longer list of URLs, we need to make sure tha
 &#9733; In your terminal, make a new environment variable `APIKEY_GITHUB` and make sure to `export` its value, as follows:
 
 ```shell
+# Bash
 export APIKEY_GITHUB=<your github username>:<the token value>
+
+# Windows Command Prompt
+set APIKEY_GITHUB=<your github username>:<the token value>
 ```
 
 &#9733; Great! Now let's try running `fairtally` on a longer list of URLs. You can make your own, or use the code snippet below, or use the list below:
 
 ```shell
+# (this snippet is Linux/Mac only)
+
 # More information on GitHub API here:
 # https://docs.github.com/en/rest/repos/repos#list-organization-repositories
 
@@ -517,16 +551,7 @@ While you can write a `CITATION.cff` file by hand with just a text editor and a 
 
 In this section, you'll use a command line tool called `zenodraft` which is available from `https://npmjs.com` to upload a file from your local machine to the archiving website [Zenodo](https://zenodo.org). Since we're only exploring at the moment, this tutorial uses the Zenodo Sandbox environment instead of regular Zenodo. The `zenodraft` commands work the same for either target platform, just make sure to leave out the `--sandbox` flag.
 
-&#9733; First let's make sure you have the required software: You'll need Nodejs and Node Package Manager (`npm`). If you're on Windows, we recommend using `choco` to install Node Version Switcher [`nvs`](https://github.com/jasongin/nvs):
-
-```
-# Windows-only
-choco install nvs
-```
-
-<!-- TODO zenodraft complete nvs instructions -->
-
-If you're on Linux or Mac, follow the instructions from https://github.com/nvm-sh/nvm#installing-and-updating to install Node Version Manager [`nvm`](https://github.com/nvm-sh/nvm), then use `nvm` as follows:
+&#9733; First let's make sure you have the required software: You'll need Nodejs and Node Package Manager (`npm`). If you're on Windows, download the latest Node release from nodejs.org https://nodejs.org/en/download. Accept the defaults that the installation wizard suggests. If you're on Linux or Mac, install Node Version Manager [`nvm`](https://github.com/nvm-sh/nvm), then use `nvm` as follows:
 
 ```shell
 # Linux / Mac only
@@ -551,14 +576,38 @@ npm --version  # mine says 8.19.2
 ```shell
 npm install zenodraft
 ```
-<!-- TODO zenodraft autocomplete -->
+
+If you're on Windows, follow that up with defining an alias for `zenodraft`, as follows:
+
+```shell
+doskey zenodraft=%CD%\node_modules\.bin\zenodraft $*
+```
+
+On Linux/Mac, you can set up Bash autocomplete as follows:
+
+```shell
+# define a temporary file name
+TMPFILE=$(mktemp)
+
+# pipe the autocomplete script into the temp file
+zenodraft-autocomplete > $TMPFILE
+
+# source the temp file
+source $TMPFILE
+
+# (restart terminal)
+```
 
 &#9733; In order to let `zenodraft` upload items to Zenodo Sandbox, you are required to identify yourself using a Personal Access Token. To get the token, go to https://sandbox.zenodo.org/account/settings/applications/ and click "new token". For "Name", fill in something like "Token for zenodraft". Mark the `deposit:actions` and `deposit:upload` scopes as checked, then click "Create". Zenodo will show you the value of the token, make sure you copy it now, you won't be able to see it again later.
 
 &#9733; When uploading a file to Zenodo, `zenodraft` will look for an environment variable by the name of `ZENODO_SANDBOX_ACCESS_TOKEN` that should contain the token. Set the environment variable, as follows:
 
 ```shell
+# Bash
 export ZENODO_SANDBOX_ACCESS_TOKEN=<your-zenodo-sandbox-token>
+
+# Windows Command Prompt
+set ZENODO_SANDBOX_ACCESS_TOKEN=<your-zenodo-sandbox-token>
 ```
 
 &#9733; Run the command below to create an empty draft deposition in a new collection on Zenodo Sandbox. If successful, it will print the identifier for the first version in the new collection:
@@ -574,7 +623,11 @@ As a reminder, items on Zenodo are versioned; the collection of all versions of 
 &#9733; Create a new environment variable named `VERSION_ID` and set it to the number that was printed:
 
 ```shell
+# Bash
 VERSION_ID=1234567 # use your own number :)
+
+# Windows Command Prompt
+set VERSION_ID=1234567
 ```
 
 &#9733; Point your browser to https://sandbox.zenodo.org and click "Upload" (button at the center top of the page; it may ask you to log in). After the jump, you should see a list of your depositions on Zenodo Sandbox. If everything worked, the top one is the one you just made. It should still be in unpublished/draft mode.
@@ -582,8 +635,11 @@ VERSION_ID=1234567 # use your own number :)
 &#9733; On your local machine, create a new directory that will contain the files for this part. Create a new file. Just use some dummy file, but make sure it has some content otherwise Zenodo doesn't play nice.
 
 ```shell
-# make some fake data
+# make some fake data (Linux/Mac)
 echo `date` > thefile.txt
+
+# Windows
+echo %time% > thefile.txt
 ```
 
 Sidenote: the command above generates a file with different contents each time. This helps avoid problems with trying to upload a deposition whose files have the same hash as an existing deposition (Zenodo does not allow such duplication).
@@ -591,7 +647,11 @@ Sidenote: the command above generates a file with different contents each time. 
 &#9733; Now upload the file to the newly created deposition:
 
 ```shell
+# Linux / Mac
 zenodraft file add --sandbox $VERSION_ID thefile.txt
+
+# Windows
+zenodraft file add --sandbox %VERSION_ID% thefile.txt
 ```
 
 Currently the metadata for your draft deposition is probably looking a bit sparse. You could update the metadata by hand, using Zenodo's graphical user interface, but doing this for every software release might get a bit tedious so let's automate that. To do so, you can use dedicated metadata files which you can store with the other files in your repository. Here is an example of a minimal metadata file for Zenodo:
@@ -611,18 +671,12 @@ Zenodo metadata files are written in JSON. You can use [JSONLint](https://jsonli
 &#9733; Create an empty file in your working directory named `.zenodo.minimal.json`. Copy the snippet above into it, then use `zenodraft` to attach the metadata to your draft deposition:
 
 ```shell
+# Linux / Mac
 zenodraft metadata update --sandbox $VERSION_ID .zenodo.minimal.json
+
+# Windows
+zenodraft metadata update --sandbox %VERSION_ID% .zenodo.minimal.json
 ```
-
-&#9733; Inspect the draft deposition on https://sandbox.zenodo.org, and if everything looks good, finalize it using:
-
-```shell
-zenodraft deposition publish --sandbox $VERSION_ID
-```
-
-Note that once you finalize a deposition, you can no longer update the files in the deposition (but the metadata can still be updated afterwards). Instead of the command line, you can also finalize a deposition by navigating to the Zenodo Sandbox interface and clicking the button there. This latter way can be especially useful because it gives you the opportunity to inspect the deposition before publishing it.
-
-Afterwards, you should be able to see your published deposition on Zenodo Sandbox [https://sandbox.zenodo.org/record/&lt;your version id&gt;](https://sandbox.zenodo.org/record/%3Cyour%20version%20id%3E).
 
 While this is all great, the deposition's metadata does not currently include any of the citation information that we put in `CITATION.cff` (see previous section). It would be really nice if we can use those data without having to keep two files in sync. Luckily, this is possible by using a tool named `cffconvert`, available from [PyPI](https://pypi.org/project/cffconvert).
 
@@ -656,7 +710,9 @@ cffconvert -f zenodo -o .zenodo.citation.json
 
 This will generate a new file `.zenodo.citation.json` containing the Zenodo equivalent of your `CITATION.cff` data.
 
-Now we need to merge `.zenodo.minimal.json` with `.zenodo.citation.json` to get the required metadata file. For this we can use `jq`, a program that helps you wrangle JSON files. For example, given two JSON files `a.json` and `b.json`:
+Now we need to merge `.zenodo.minimal.json` with `.zenodo.citation.json` to get the required metadata file. For this we can use `jq`, a program that helps you wrangle JSON files. If you're on windows, install jq in a new terminal with Administrative privileges: `choco install jq -y`. On Linux/Mac install jq from your package manager, e.g `sudo apt install jq`
+
+Given two JSON files `a.json` and `b.json`:
 
 ```json
 {
@@ -673,7 +729,11 @@ Now we need to merge `.zenodo.minimal.json` with `.zenodo.citation.json` to get 
 we can use `jq` as follows to combine them:
 
 ```shell
+# Linux / Mac
 cat a.json b.json | jq -s add
+
+# Windows
+type a.json b.json | jq -s add
 ```
 
 The result will be:
@@ -688,11 +748,29 @@ The result will be:
 &#9733; Use `jq` to combine `.zenodo.minimal.json` with `.zenodo.citation.json` and use the result to update the metadata of your deposition (Zenodo allows updating metadata after finalizing the deposition), as follows:
 
 ```shell
+# Linux / Mac
 cat .zenodo.minimal.json .zenodo.citation.json | jq -s add > .zenodo.json
 zenodraft metadata update --sandbox $VERSION_ID .zenodo.json
+
+# Windows
+type .zenodo.minimal.json .zenodo.citation.json | jq -s add > .zenodo.json
+zenodraft metadata update --sandbox %VERSION_ID% .zenodo.json
 ```
 
-&#9733; Inspect the record on Zenodo Sandbox and verify that the metadata was updated to reflect the data from `CITATION.cff`.
+&#9733; Inspect the record on Zenodo Sandbox and verify that the metadata was updated to reflect the data from `CITATION.cff`. If everything looks good, finalize it using:
+
+```shell
+# Linux / Mac
+zenodraft deposition publish --sandbox $VERSION_ID
+
+# Windows
+zenodraft deposition publish --sandbox %VERSION_ID%
+```
+
+Note that once you finalize a deposition, you can no longer update the files in the deposition (but the metadata can still be updated afterwards). Instead of the command line, you can also finalize a deposition by navigating to the Zenodo Sandbox interface and clicking the button there. This latter way can be especially useful because it gives you the opportunity to inspect the deposition before publishing it.
+
+Afterwards, you should be able to see your published deposition on Zenodo Sandbox [https://sandbox.zenodo.org/record/&lt;your version id&gt;](https://sandbox.zenodo.org/record/%3Cyour%20version%20id%3E).
+
 
 Zenodo supports a lot of metadata, but its documentation is a bit sparse at the moment. The _unofficial_ JSONschema for Zenodo deposition metadata is maintained here: https://github.com/zenodraft/metadata-schema-zenodo. You can use tools like JSONSchemaValidator (https://www.jsonschemavalidator.net/) to make sure the JSON follows the layout that Zenodo expects.
 
