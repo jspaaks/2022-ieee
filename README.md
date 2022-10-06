@@ -29,7 +29,7 @@
 
 **Note for Windows users only**
 
-This tutorial makes extensive use of the command line. If you're on Windows, you should be able to work through all the materials using the Windows Command Prompt. If you're familiar with Windows Subsystem for Linux (WSL) that should also work. Additionally, some tools we'll be using in this tutorial are installable via the third-party package manager for Windows named [Chocolatey](https://chocolatey.org/) or `choco` for short. You can install `choco` following the instructions from https://community.chocolatey.org/courses/installation/installing#cmd. The dropdown list at the top of that page also offers alternative ways of installing `choco`.
+This tutorial makes extensive use of the command line. If you're on Windows, you should be able to work through all the materials using the Windows Command Prompt. If you're familiar with Windows Subsystem for Linux (WSL) that should also work. Additionally, some tools we'll be using in this tutorial are installable via the third-party package manager for Windows named [Chocolatey](https://chocolatey.org/) or `choco` for short. You can install `choco` following the instructions from https://community.chocolatey.org/courses/installation/installing (choose "Basic installation" from the Dropdown).
 
 **Action required (&#9733;)**
 
