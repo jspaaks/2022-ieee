@@ -712,7 +712,7 @@ cffconvert -f zenodo -o .zenodo.citation.json
 
 This will generate a new file `.zenodo.citation.json` containing the Zenodo equivalent of your `CITATION.cff` data.
 
-Now we need to merge `.zenodo.minimal.json` with `.zenodo.citation.json` to get the required metadata file. For this we can use `jq`, a program that helps you wrangle JSON files. If you're on windows, install jq in a new terminal with Administrative privileges: `choco install jq -y`. On Linux/Mac, install `jq` from your package manager, e.g. `sudo apt install jq`.
+Now we need to merge `.zenodo.minimal.json` with `.zenodo.citation.json` to get the required metadata file. For this we can use `jq`, a program that helps you wrangle JSON files. If you're on windows, install `jq` in a new terminal with Administrative privileges: `choco install jq -y`. On Linux/Mac, install `jq` from your package manager, e.g. `sudo apt install jq`.
 
 Given two JSON files `a.json` and `b.json`:
 
