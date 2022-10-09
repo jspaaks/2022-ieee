@@ -2,18 +2,16 @@
 
 ## Tentative schedule
 
-| duration    | cumulative | description                  | session type |
-| ---         | ---        | ---                          | ---          |
-| 15m         | 15m        | fair-software.nl, FAIR       | presentation |
-| 10m         | 25m        | howfairis                    | demo         |
-| 30m         | 55m        | ~                            | hands on     |
-| 10m         | 1h05m      | **break**                    | &nbsp;       |
-| 15m         | 1h20m      | fair-software GitHub Action  | demo         |
-| 20m         | 1h40m      | ~                            | hands on     |
-| 10m         | 1h50m      | fairtally                    | demo         |
-| 15m         | 2h05m      | ~                            | hands on     |
-| 10m         | 2h15m      | **break**                    | &nbsp;       |
-| 45m         | 3h         | extras                       | hands on     |
+| duration    | cumulative | description                              | session type |
+| ---         | ---        | ---                                      | ---          |
+|  5m         | 5m         | getting settled                          |              |
+| 15m         | 20m        | fair-software.nl, FAIR                   | presentation |
+| 10m         | 30m        | howfairis                                | demo         |
+| 30m         | 1h         | ~                                        | hands on     |
+| 30m         | 1h30m      | **break**                                | &nbsp;       |
+| 15m         | 1h45m      | fair-software GitHub Action & fairtally  | demo         |
+| 35m         | 2h20m      | ~                                        | hands on     |
+| 10m         | 2h30m      | extras                                   | presentation |
 
 ## 1. Preparation
 
@@ -128,7 +126,7 @@ This should return a `python` that is local to the `env` directory, most likely 
 1. Explore the command line options
 1. Experiment with `howfairis` configuration file on local and on remote
 
-The tool that we will be using in this part is called `howfairis`. It is a command line program that you can install from the Python Package Index (PyPI). PyPI is the Python community's platform where people publish their packages, so that others can use them. You can see the page for the `howfairis` package on PyPI here https://pypi.org/project/howfairis.
+The tool that we will be using in this part is called `howfairis`. It is a command line program that you can install from the Python Package Index (PyPI). PyPI is the Python community's platform where people publish their packages, so that others can use them. With `howfairis`, one can automatically determine a repository's compliance with the _Five recommendations for FAIR software_ website, https://fair-software.eu. under the hood, `howfairis` uses a combination of the GitHub/GitLab API and regular expressions on your README. The page for the `howfairis` package on PyPI is here https://pypi.org/project/howfairis.
 
 &#9733; With the virtual environment active, download and install `howfairis` from PyPI using:
 
