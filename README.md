@@ -12,6 +12,7 @@
 | 15m         | 1h45m      | fair-software GitHub Action & fairtally  | demo         |
 | 35m         | 2h20m      | ~                                        | hands on     |
 | 10m         | 2h30m      | extras                                   | presentation |
+| 30m         | 3h         | ~                                        | hands on     |
 
 ## 1. Preparation
 
