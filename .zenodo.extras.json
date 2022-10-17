@@ -1,0 +1,57 @@
+{
+  "access_right": "open",
+  "upload_type": "software",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/jspaaks/2022-ieee/tree/1.0.0",
+      "relation": "isSupplementedBy",
+      "resource_type": "dataset",
+      "scheme": "url"
+    }, {
+      "identifier": "10.5281/zenodo.7041464",
+      "relation": "references",
+      "resource_type": "software",
+      "scheme": "doi"
+    }, {
+      "identifier": "10.5281/zenodo.4590883",
+      "relation": "references",
+      "resource_type": "software",
+      "scheme": "doi"
+    }, {
+      "identifier": "10.5281/zenodo.6475642",
+      "relation": "references",
+      "resource_type": "software",
+      "scheme": "doi"
+    }, {
+      "identifier": "10.5281/zenodo.6366575",
+      "relation": "references",
+      "resource_type": "software",
+      "scheme": "doi"
+    }, {
+      "identifier": "https://github.com/zenodraft/metadata-schema-zenodo",
+      "relation": "references",
+      "resource_type": "software",
+      "scheme": "url"
+    }, {
+      "identifier": "https://citation-file-format.github.io/cff-initializer-javascript",
+      "relation": "references",
+      "resource_type": "software",
+      "scheme": "url"
+    }, {
+      "identifier": "https://nlesc.github.io/awesome-research-software-registries",
+      "relation": "references",
+      "resource_type": "software",
+      "scheme": "url"
+    }, {
+      "identifier": "https://ardc-fair-checklist.github.io/ardc-fair-checklist",
+      "relation": "references",
+      "resource_type": "software",
+      "scheme": "url"
+    }, {
+      "identifier": "https://coderefinery.github.io/github-without-command-line/doi/",
+      "relation": "references",
+      "resource_type": "software",
+      "scheme": "url"
+    }
+  ]
+}
