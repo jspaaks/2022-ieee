@@ -1,6 +1,6 @@
 {
   "access_right": "open",
-  "upload_type": "software",
+  "upload_type": "dataset",
   "related_identifiers": [
     {
       "identifier": "https://github.com/jspaaks/2022-ieee/tree/1.0.0",
